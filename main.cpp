@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
         db->run();
 
         delete db;
-    } catch (runtime_error &excpt) {
+    } catch (runtime_error &excpt) { // error handling
         cout << excpt.what() << endl;
     }
 

@@ -14,20 +14,21 @@ class Database {
 
         // auxiliary functions
         int printMenu();
-        void printAllStudents();
-        void printAllFaculty();
-        void printStudentInfo();
-        void printFacultyInfo();
-        void printFacultyInfoFromStudent();
-        void printFacultyAdviseesInfo();
-        void addNewStudent();
-        void deleteStudent();
-        void addNewFaculty();
-        void deleteFaculty();
-        void changeStudentAdvisors();
-        void removeFacultyAdvisees();
-        void undo();
-        
+
+        void printAllStudents();                // option 1
+        void printAllFaculty();                 // option 2
+        void printStudentInfo();                // option 3
+        void printFacultyInfo();                // option 4
+        void printFacultyInfoFromStudent();     // option 5
+        void printFacultyAdviseesInfo();        // option 6
+        void addNewStudent();                   // option 7
+        void deleteStudent();                   // option 8
+        void addNewFaculty();                   // option 9
+        void deleteFaculty();                   // option 10
+        void changeStudentAdvisors();           // option 11
+        void removeFacultyAdvisees();           // option 12
+        void undo();                            // option 13
+
     private:
         BST<Student> *masterStudent;
         BST<Faculty> *masterFaculty;

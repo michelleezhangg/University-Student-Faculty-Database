@@ -19,18 +19,42 @@ Faculty::~Faculty() { // destructor
 }
 
 // overloaded operator
+/**
+ * overloads the operator == for the Faculty class.
+ * @param f a Faculty to compare with operator ==
+ * @return true if the faculty members are equal (their IDs are equal).
+ * @return false if the faculty members are not equal (their IDs are not equal).
+ */
 bool Faculty::operator == (Faculty *f) {
     return this->fr->getID() == f->fr->getID();
 }
 
+/**
+ * overloads the operator != for the Student class.
+ * @param f a Faculty to compare with operator !=
+ * @return true if the faculty members are not equal (their IDs are not equal).
+ * @return false if the faculty members are equal (their IDs are equal).
+ */
 bool Faculty::operator != (Faculty *f) {
     return this->fr->getID() != f->fr->getID();
 }
 
+/**
+ * overloads the operator > for the Faculty class.
+ * @param f a Faculty to compare with operator >
+ * @return true if the left faculty member is greater than the right faculty member (left faculty ID > right faculty ID).
+ * @return false if the left faculty member is not greater than the right faculty member.
+ */
 bool Faculty::operator > (Faculty *f) {
     return this->fr->getID() > f->fr->getID();
 }
 
+/**
+ * overloads the operator < for the Faculty class.
+ * @param f a Faculty to compare with operator <
+ * @return true if the left faculty member is less than the right faculty member (left faculty ID < right faculty ID).
+ * @return false if the left faculty member is not less than the right faculty member.
+ */
 bool Faculty::operator < (Faculty *f) {
     return this->fr->getID() < f->fr->getID();
 }

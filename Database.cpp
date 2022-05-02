@@ -11,6 +11,10 @@ Database::~Database() { // destructors
 }
 
 void Database::run() {
+    // check if files "facultyTable" & "studentTable" exist in current directories
+        // if they do: put them in as data for masterStudent & masterFaculty (object serialization).
+        // else: initialize masterStudent & masterFaculty as empty BSTs.
+
     int option = printMenu();
 
     while (option != 14) {
@@ -79,60 +83,67 @@ int Database::printMenu() {
     cout << "14) Exit." << endl << endl;
 
     // user input
-    cout << "Which option would you like: " << endl;
+    cout << "Which option would you like: ";
     int input = -1;
-    cin >> input; //FIXME: error handle user input
+    cin >> input;
+
+    // error handling: user input
+    while (input > 14 || input < 1) {
+        cout << "Please pick one of the options (1-14): ";
+        cin >> input;
+    }
+
     return input;
 }
 
 void Database::printAllStudents() {
-
+    // traverse & return (all students)
 }
 
 void Database::printAllFaculty() {
-
+    // traverse & return (all faculty)
 }
 
 void Database::printStudentInfo() {
-
+    // find student
 }
 
 void Database::printFacultyInfo() {
-
+    // find faculty
 }
 
 void Database::printFacultyInfoFromStudent() {
-
+    // find student, store faculty id, find faculty
 }
 
 void Database::printFacultyAdviseesInfo() {
-
+    // find faculty, return advisees info
 }
 
 void Database::addNewStudent() {
-
+    // insert student
 }
 
 void Database::deleteStudent() {
-
+    // delete student
 }
 
 void Database::addNewFaculty() {
-
+    // insert faculty
 }
 
 void Database::deleteFaculty() {
-
+    // delete faculty
 }
 
 void Database::changeStudentAdvisors() {
-
+    // find student, modify student
 }
 
 void Database::removeFacultyAdvisees() {
-
+    // find faculty, modify faculty
 }
 
 void Database::undo() {
-    
+
 }
