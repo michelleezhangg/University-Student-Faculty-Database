@@ -11,50 +11,76 @@
 #include "Student.h"
 
 Student::Student() { // default constructor
-    sr = new StudentRecords();
+    major = "";
+    gpa = 0.0;
+    advisorID = -1;
+    sr = new StudentRecords(); //FIXME: inheritance
+}
+
+Student::Student(int i, string n, string l, string m, double g, int a) { // overloaded constructor
+    id = i;
+    name = n;
+    level = l;
+    major = m;
+    gpa = g;
+    advisorID = a;
+    sr = new StudentRecords(id, name, level, major, gpa, advisorID); //FIXME: inheritance
 }
 
 Student::~Student() { // destructor
     delete sr;
 }
 
-// overloaded operator
+// accessors
+/** @return major a string representing the major of the student. */
+string Student::getMajor() {
+    return major;
+}
+
+/** @return gpa a double representing the gpa of the student. */
+double Student::getGPA() {
+    return gpa;
+}
+
+/** @return advisorID an integer representing the advisor's ID of the student. */
+int Student::getAdvisorID() {
+    return advisorID;
+}
+
+/** @return sr a StudentRecords object representing the records of the student. */
+StudentRecords Student::getStudentRecords() {
+    return sr;
+}
+
+// mutators
 /**
- * overloads the operator == for the Student class.
- * @param s a Student to compare with operator ==
- * @return true if the students are equal (their IDs are equal).
- * @return false if the students are not equal (their IDs are not equal).
+ * sets the private member: major.
+ * @param m a string representing the major of the student.
  */
-bool Student::operator == (Student *s) {
-    return this->sr->getID() == s->sr->getID();
+void Student::setMajor(string m) {
+    major = m;
 }
 
 /**
- * overloads the operator != for the Student class.
- * @param s a Student to compare with operator !=
- * @return true if the students are not equal (their IDs are not equal).
- * @return false if the students are equal (their IDs are equal).
+ * sets the private member: gpa.
+ * @param g a double representing the gpa of the student.
  */
-bool Student::operator != (Student *s) {
-    return this->sr->getID() != s->sr->getID();
+void Student::setGPA(double g) {
+    gpa = g;
 }
 
 /**
- * overloads the operator > for the Student class.
- * @param s a Student to compare with operator >
- * @return true if the left student is greater than the right student (left student ID > right student ID).
- * @return false if the left student is not greater than the right student.
+ * sets the private member: advisorID.
+ * @param a an integer representing the advisor's ID of the student.
  */
-bool Student::operator > (Student *s) {
-    return this->sr->getID() > s->sr->getID();
+void Student::setAdvisorID(int a) {
+    advisorID = a;
 }
 
 /**
- * overloads the operator < for the Student class.
- * @param s a Student to compare with operator <
- * @return true if the left student is less than the right student (left student ID < right student ID).
- * @return false if the left student is not less than the right student.
+ * sets the private member: sr.
+ * @param student_records a StudentRecords object representing the records of the student.
  */
-bool Student::operator < (Student *s) {
-    return this->sr->getID() < s->sr->getID();
+void Student::setStudentRecords(StudentRecords *student_records) {
+    sr = student_records;
 }

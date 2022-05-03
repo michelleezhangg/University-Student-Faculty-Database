@@ -8,7 +8,7 @@
 * This is the header file for the StudentRecords class.
 */
 
-#ifndef STUDENTRECORDS_H // header guard
+#ifndef STUDENTRECORDS_H
 #define STUDENTRECORDS_H
 
 #include <iostream>
@@ -18,7 +18,7 @@ using namespace std;
 class StudentRecords {
     public:
         StudentRecords(); // default constructor
-        StudentRecords(int id, string name, string level, string major, double gpa, int advisorID); // overloaded constructor
+        StudentRecords(int i, string n, string l, string m, double g, int a); // overloaded constructor
         ~StudentRecords(); // destructor
 
         // accessor
@@ -30,12 +30,12 @@ class StudentRecords {
         int getAdvisorID();
 
         // mutators
-        void setID(int id);
-        void setName(string name);
-        void setLevel(string level);
-        void setMajor(string major);
-        void setGPA(double gpa);
-        void setAdvisorID(int advisorID);
+        void setID(int i);
+        void setName(string n);
+        void setLevel(string l);
+        void setMajor(string m);
+        void setGPA(double g);
+        void setAdvisorID(int a);
 
     private:
         int id;

@@ -6,27 +6,33 @@
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
 * This is the header file for the Faculty Class.
+* This class inherits from Person Class.
 */
 
 #ifndef FACULTY_H // header guard
 #define FACULTY_H
 
+#include "Person.h"
 #include "FacultyRecords.h"
 
-class Faculty {
+class Faculty : public Person {
     public:
         Faculty(); // default constructor
+        Faculty(int i, string n, string l, string d, vector<int> *sid); // overloaded constructor
         ~Faculty(); // destructor
 
-        // overloading operators
-        bool operator == (Faculty *f);
-        bool operator != (Faculty *f);
-        bool operator > (Faculty *f);
-        bool operator < (Faculty *f);
+        // accessors
+        string getDepartment();
+        vector<int> getStudentIDs();
 
-        FacultyRecords *fr;
+        // mutators
+        void setDepartment(string d);
+        void setStudentIDs(vector<int> *sid);
 
     private:
+        string department;
+        vector<int> *studentIDs;
+        FacultyRecords *fr;
 };
 
 #endif

@@ -6,55 +6,54 @@
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
 * This is the implementation file for the Faculty Class.
+* This class inherits from Person Class.
 */
 
 #include "Faculty.h"
 
 Faculty::Faculty() { // default constructor
+    department = "";
+    studentIDs = new vector<int>();
     fr = new FacultyRecords();
+}
+
+Faculty::Faculty(int i, string n, string l, string d, vector<int> *sid) { // overloaded constructor
+    id = i;
+    name = n;
+    level = l;
+    department = d;
+    fr = new FacultyRecords(id, name, level, department, studentIDs);
 }
 
 Faculty::~Faculty() { // destructor
     delete fr;
+    delete studentIDs;
 }
 
-// overloaded operator
-/**
- * overloads the operator == for the Faculty class.
- * @param f a Faculty to compare with operator ==
- * @return true if the faculty members are equal (their IDs are equal).
- * @return false if the faculty members are not equal (their IDs are not equal).
- */
-bool Faculty::operator == (Faculty *f) {
-    return this->fr->getID() == f->fr->getID();
+// accessors
+/** @return department a string representing the department of the faculty member. */
+string Faculty::getDepartment() {
+    return department;
 }
 
-/**
- * overloads the operator != for the Student class.
- * @param f a Faculty to compare with operator !=
- * @return true if the faculty members are not equal (their IDs are not equal).
- * @return false if the faculty members are equal (their IDs are equal).
- */
-bool Faculty::operator != (Faculty *f) {
-    return this->fr->getID() != f->fr->getID();
+/** @return studentIDs a vector representing the collection of faculty member's student advisees' IDs. */
+vector<int> Faculty::getStudentIDs() {
+    return studentIDs;
 }
 
+// mutators
 /**
- * overloads the operator > for the Faculty class.
- * @param f a Faculty to compare with operator >
- * @return true if the left faculty member is greater than the right faculty member (left faculty ID > right faculty ID).
- * @return false if the left faculty member is not greater than the right faculty member.
+ * sets the private member: department.
+ * @param d a string representing the department of the faculty member.
  */
-bool Faculty::operator > (Faculty *f) {
-    return this->fr->getID() > f->fr->getID();
+void Faculty::setDepartment(string d) {
+    department = d;
 }
 
 /**
- * overloads the operator < for the Faculty class.
- * @param f a Faculty to compare with operator <
- * @return true if the left faculty member is less than the right faculty member (left faculty ID < right faculty ID).
- * @return false if the left faculty member is not less than the right faculty member.
+ * sets the private member: studentIDs.
+ * @param sid a vector representing the collection of faculty member's student advisees' IDs.
  */
-bool Faculty::operator < (Faculty *f) {
-    return this->fr->getID() < f->fr->getID();
+void Faculty::setStudentIDs(vector<int> *sid) {
+    studentIDs = sid;
 }

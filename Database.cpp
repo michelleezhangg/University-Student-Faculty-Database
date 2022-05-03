@@ -57,7 +57,7 @@ void Database::run() {
                 removeFacultyAdvisees();
                 break;
             case 13:
-                undo();
+                rollBack();
                 break;
         }
 
@@ -144,6 +144,6 @@ void Database::removeFacultyAdvisees() {
     // find faculty, modify faculty
 }
 
-void Database::undo() {
+void Database::rollBack() {
 
 }

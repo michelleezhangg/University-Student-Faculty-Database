@@ -18,12 +18,12 @@ FacultyRecords::FacultyRecords() { // default constructor
     studentIDs = new vector<int>();
 }
 
-FacultyRecords::FacultyRecords(int id, string name, string level, string department) { // overloaded constructor
-    this->id = id;
-    this->name = name;
-    this->level = level;
-    this->department = department;
-    studentIDs = new vector<int>();
+FacultyRecords::FacultyRecords(int i, string n, string l, string d, vector<int> *sid) { // overloaded constructor
+    id = i;
+    name = n;
+    level = l;
+    department = d;
+    studentIDs = sid;
 }
 
 FacultyRecords::~FacultyRecords() { // destructor
@@ -54,36 +54,49 @@ string FacultyRecords::getDepartment() {
     return department;
 }
 
+/** @return studentIDs a vector representing the collection of the faculty's students' IDs. */
+vector<int> FacultyRecords::getStudentIDs() {
+    return studentIDs;
+}
+
 // mutators
 /**
  * sets the private member: id.
- * @param id an integer representing the ID of the faculty member. 
+ * @param i an integer representing the ID of the faculty member. 
  */
-void FacultyRecords::setID(int id) {
-    this->id = id;
+void FacultyRecords::setID(int i) {
+    id = i;
 }
 
 /**
  * sets the private member: name.
- * @param name a string representing the name of the faculty member. 
+ * @param n a string representing the name of the faculty member. 
  */
-void FacultyRecords::setName(string name) {
-    this->name = name;
+void FacultyRecords::setName(string n) {
+    name = n;
 }
 
 /**
  * sets the private member: level.
- * @param level a string representing the level of the faculty member. 
+ * @param l a string representing the level of the faculty member. 
  * examples: lecturer, assistant professor, associate professor, etc.
  */
-void FacultyRecords::setLevel(string level) {
-    this->level = level;
+void FacultyRecords::setLevel(string l) {
+    level = l;
 }
 
 /**
  * sets the private member: department.
- * @param department a string representing the department of the faculty member. 
+ * @param d a string representing the department of the faculty member. 
  */
-void FacultyRecords::setDepartment(string department) {
-    this->department = department;
+void FacultyRecords::setDepartment(string d) {
+    department = d;
+}
+
+/**
+ * sets the private member: department.
+ * @param sid a vector representing the collection of the faculty's students' IDs. 
+ */
+void FacultyRecords::setStudentIDs(vector<int> *sid) {
+    studentIDs = sid;
 }

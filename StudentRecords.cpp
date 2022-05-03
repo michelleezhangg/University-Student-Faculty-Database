@@ -19,13 +19,13 @@ StudentRecords::StudentRecords() { // default constructor
     advisorID = -1;
 }
 
-StudentRecords::StudentRecords(int id, string name, string level, string major, double gpa, int advisorID) { // overloaded constructor
-    this->id = id;
-    this->name = name;
-    this->level = level;
-    this->major = major;
-    this->gpa = gpa;
-    this->advisorID = advisorID;
+StudentRecords::StudentRecords(int i, string n, string l, string m, double g, int a) { // overloaded constructor
+    id = i;
+    name = n;
+    level = l;
+    major = m;
+    gpa = g;
+    advisorID = a;
 }
 
 StudentRecords::~StudentRecords() {} // destructor
@@ -67,49 +67,49 @@ int StudentRecords::getAdvisorID() {
 // mutators
 /** 
  * sets the private member: id.
- * @param id an integer representing the ID of the student. 
+ * @param i an integer representing the ID of the student. 
  */
-void StudentRecords::setID(int id) {
-    this->id = id;
+void StudentRecords::setID(int i) {
+    id = i;
 }
 
 /**
  * sets the private member: name.
- * @param name a string representing the name of the student.
+ * @param n a string representing the name of the student.
  */
-void StudentRecords::setName(string name) {
-    this->name = name;
+void StudentRecords::setName(string n) {
+    name = n;
 }
 
 /** 
  * sets the private member: level.
- * @param level a string representing the level of the student.
+ * @param l a string representing the level of the student.
  * examples: freshman, sophomore, junior, senior, etc.
  */
-void StudentRecords::setLevel(string level) {
-    this->level = level;
+void StudentRecords::setLevel(string l) {
+    level = l;
 }
 
 /**
  * sets the private member: major.
- * @param major a string representing the major of the student.
+ * @param m a string representing the major of the student.
  */
-void StudentRecords::setMajor(string major) {
-    this->major = major;
+void StudentRecords::setMajor(string m) {
+    major = m;
 }
 
 /** 
  * sets the private member: gpa.
- * @param gpa a double representing the GPA of the student. 
+ * @param g a double representing the GPA of the student. 
  */
-void StudentRecords::setGPA(double gpa) {
-    this->gpa = gpa;
+void StudentRecords::setGPA(double g) {
+    gpa = g;
 }
 
 /**
  * sets the private member: advisorID.
- * @param advisorID an integer representing the ID of the student's advisor (faculty). 
+ * @param a an integer representing the ID of the student's advisor (faculty). 
  */
-void StudentRecords::setAdvisorID(int advisorID) {
-    this->advisorID = advisorID;
+void StudentRecords::setAdvisorID(int a) {
+    advisorID = a;
 }

@@ -6,27 +6,38 @@
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
 * This is the header file for the Student class.
+* This class inherits from Person Class.
 */
 
-#ifndef STUDENT_H // header guard
+#ifndef STUDENT_H
 #define STUDENT_H
 
+#include "Person.h"
 #include "StudentRecords.h"
 
-class Student {
+class Student : public Person {
     public:
         Student(); // default constructor
+        Student(int i, string n, string l, string m, double g, int a); // overloaded constructor
         ~Student(); // destructor
 
-        // overloading operators
-        bool operator == (Student *s);
-        bool operator != (Student *s);
-        bool operator > (Student *s);
-        bool operator < (Student *s);
+        // accessors
+        string getMajor();
+        double getGPA();
+        int getAdvisorID();
+        StudentRecords getStudentRecords();
 
-        StudentRecords *sr;
+        // mutators
+        void setMajor(string m);
+        void setGPA(double g);
+        void setAdvisorID(int a);
+        void setStudentRecords(StudentRecords *student_records);
 
     private:
+        string major;
+        double gpa;
+        int advisorID;
+        StudentRecords *sr;
 };
 
 #endif

@@ -27,7 +27,7 @@ class Database {
         void deleteFaculty();                   // option 10
         void changeStudentAdvisors();           // option 11
         void removeFacultyAdvisees();           // option 12
-        void undo();                            // option 13
+        void rollBack();                        // option 13
 
     private:
         BST<Student> *masterStudent;
