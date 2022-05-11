@@ -17,7 +17,7 @@ void Database::run() {
 
     int option = printMenu();
 
-    while (option != 14) {
+    while (true) { // error handles user's input
 
         switch(option) {
             case 1:
@@ -59,36 +59,47 @@ void Database::run() {
             case 13:
                 rollBack();
                 break;
+            case 14:
+                exit();
+                break;
         }
+
+        if (option == 14)
+            break;
 
         option = printMenu();
     }
 }
 
+/**
+ * prints out the menu for the user and obtains the user's input.
+ * @return input an integer representing the user's number choice from the menu.
+ * auxiliary function for the function run()
+ */
 int Database::printMenu() {
     // print menu
-    cout << endl << "1) Print all students and their information (sorted by ascending ID number)." << endl;
-    cout << "2) Print all faculty and their information (sorted by ascending ID number)." << endl;
-    cout << "3) Find and display student information given the students id." << endl;
-    cout << "4) Find and display faculty information given the faculty id." << endl;
-    cout << "5) Given a student's id, print the name and info of their faculty advisor." << endl;
-    cout << "6) Given a faculty id, print ALL the names and info of his/her advisees." << endl;
-    cout << "7) Add a new student." << endl;
-    cout << "8) Delete a student given the id." << endl;
-    cout << "9) Add a new faculty member." << endl;
-    cout << "10) Delete a faculty member given the id." << endl;
-    cout << "11) Change a student's advisor given the student id and the new faculty id." << endl;
-    cout << "12) Remove an advisee from a faculty member given the ids. " << endl;
-    cout << "13) Rollback." << endl;
-    cout << "14) Exit." << endl << endl;
+    cout << endl << "1. Print all students and their information (sorted by ascending ID number)." << endl;
+    cout << "2. Print all faculty and their information (sorted by ascending ID number)." << endl;
+    cout << "3. Find and display student information given the student's id." << endl;
+    cout << "4. Find and display faculty information given the faculty id." << endl;
+    cout << "5. Given a student's id, print the name and info of their faculty advisor." << endl;
+    cout << "6. Given a faculty id, print ALL the names and info of his/her advisees." << endl;
+    cout << "7. Add a new student." << endl;
+    cout << "8. Delete a student given the id." << endl;
+    cout << "9. Add a new faculty member." << endl;
+    cout << "10. Delete a faculty member given the id." << endl;
+    cout << "11. Change a student's advisor given the student id and the new faculty id." << endl;
+    cout << "12. Remove an advisee from a faculty member given the ids. " << endl;
+    cout << "13. Rollback." << endl;
+    cout << "14. Exit." << endl << endl;
 
     // user input
-    cout << "Which option would you like: ";
-    int input = -1;
+    cout << "Please enter an option (1-14): ";
+    int input;
     cin >> input;
 
     // error handling: user input
-    while (input > 14 || input < 1) {
+    while (input > 14 && input < 1) {
         cout << "Please pick one of the options (1-14): ";
         cin >> input;
     }
@@ -96,54 +107,212 @@ int Database::printMenu() {
     return input;
 }
 
+/**
+ * prints all of the students in the database.
+ * if the database contains no students, a message will print out informing the user.
+ * option 1
+ */
 void Database::printAllStudents() {
-    // traverse & return (all students)
+    if (masterStudent->isEmpty()) // checks if tree is empty
+        cout << "There are no students in your database." << endl;
+    else
+        masterStudent->printNodes();
 }
 
+/**
+ * prints all of the faculty members in the database.
+ * if the database contains no faculty members, a message will print out informing the user.
+ * option 2
+ */
 void Database::printAllFaculty() {
-    // traverse & return (all faculty)
+    if (masterFaculty->isEmpty()) // checks if tree is empty
+        cout << "There are no faculty members in your database." << endl;
+    else
+        masterFaculty->printNodes();
 }
 
+/**
+ * prints out a student's information based on a user-entered ID.
+ * option 3
+ */
 void Database::printStudentInfo() {
-    // find student
+    while (true) {
+        if (masterStudent->isEmpty()) // checks if tree is empty
+            cout << "There are no students in your database." << endl;
+
+        else {
+            // get user's input
+            cout << "Please enter the student ID: ";
+            int id;
+            cin >> id;
+
+            // finds student
+            if (masterStudent->idExists(id)) { // student is found
+                cout << masterStudent->getNode(id) << endl;
+                break;
+            } else // student is not found
+                cout << "That student does not exist in the database." << endl;
+        }
+    }
 }
 
+/**
+ * prints out a faculty member's information based on a user-entered ID.
+ * option 4
+ */
 void Database::printFacultyInfo() {
-    // find faculty
+    while (true) {
+        if (masterFaculty->isEmpty()) // checks if tree is empty
+            cout << "There are no faculty members in your database." << endl;
+
+        else {
+            // get user's input
+            cout << "Please enter the faculty ID: ";
+            int id;
+            cin >> id;
+
+            // finds faculty
+            if (masterFaculty->idExists(id)) { // faculty is found
+                cout << masterFaculty->getNode(id) << endl;
+                break;
+            } else // faculty is not found
+                cout << "That faculty does not exist in the database." << endl;
+        }
+    }
 }
 
 void Database::printFacultyInfoFromStudent() {
     // find student, store faculty id, find faculty
 }
 
+/**
+ * 
+ */
 void Database::printFacultyAdviseesInfo() {
-    // find faculty, return advisees info
+    while (true) {
+        if (masterFaculty->isEmpty()) // check if tree is empty
+            cout << "There are no faculty members in your database." << endl;
+
+        else {
+            // get user's input
+            cout << "Please enter the faculty ID: ";
+            int id;
+            cin >> id;
+
+            if (masterFaculty->idExists(id)) { // faculty is found
+                Faculty f = masterFaculty->getNode(id);
+                f.printAdvisees();
+                break;
+            } else // faculty is not found
+                cout << "That faculty does not exist in database." << endl;
+        }
+    }    
 }
 
+/**
+ * adds a new student to the database.
+ * the name, level, major, and gpa are prompted from the user.
+ * the ID and the advisor ID are randomly generated.
+ * option 7
+ */
 void Database::addNewStudent() {
-    // insert student
+    string name = "";
+    int id = -1;
+    string level = "";
+    string major = "";
+    double gpa = 0.0;
+    int advisorID = -1;
+
+    cout << "Please enter the information about the student." << endl;
+    
+    cout << "Name: ";
+    cin >> name;
+
+    cout << "Level: ";
+    cin >> level;
+
+    cout << "Major: ";
+    cin >> major;
+
+    cout << "GPA: ";
+    cin >> gpa;
+
+    // randomizing student ID
+    while (masterStudent->idExists(id))
+        id = rand() % 10000;
+
+    // FIXME: assign random advisorID
+
+    Student *s = new Student(id, name, level, major, gpa, advisorID);
 }
 
+/**
+ * option 8
+ */
 void Database::deleteStudent() {
     // delete student
 }
 
+/**
+ * adds a new faculty member to the database.
+ * the name, level, and department are prompted from the user.
+ * option 9
+ */
 void Database::addNewFaculty() {
-    // insert faculty
+    string name = "";
+    int id = -1;
+    string level = "";
+    string department = "";
+
+    cout << "Please enter the information about the faculty member." << endl;
+
+    cout << "Name: ";
+    cin >> name;
+
+    cout << "Level: ";
+    cin >> level;
+
+    cout << "Department: ";
+    cin >> department;
+
+    // randomizing student ID
+    while (masterStudent->idExists(id))
+        id = rand() % 10000;
+
+    Faculty *f = new Faculty(id, name, level, department);
 }
 
+/**
+ * option 10
+ */
 void Database::deleteFaculty() {
     // delete faculty
 }
 
+/**
+ * option 11
+ */
 void Database::changeStudentAdvisors() {
-    // find student, modify student
+    
 }
 
+/**
+ * option 12
+ */
 void Database::removeFacultyAdvisees() {
     // find faculty, modify faculty
 }
 
+/**
+ * option 13
+ */
 void Database::rollBack() {
+
+}
+
+/**
+ * option 14
+ */
+void Database::exit() {
 
 }

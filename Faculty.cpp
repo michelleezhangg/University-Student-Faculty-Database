@@ -17,11 +17,12 @@ Faculty::Faculty() { // default constructor
     fr = new FacultyRecords();
 }
 
-Faculty::Faculty(int i, string n, string l, string d, vector<int> *sid) { // overloaded constructor
+Faculty::Faculty(int i, string n, string l, string d) { // overloaded constructor
     id = i;
     name = n;
     level = l;
     department = d;
+    studentIDs = new vector<int>();
     fr = new FacultyRecords(id, name, level, department, studentIDs);
 }
 
@@ -38,7 +39,7 @@ string Faculty::getDepartment() {
 
 /** @return studentIDs a vector representing the collection of faculty member's student advisees' IDs. */
 vector<int> Faculty::getStudentIDs() {
-    return studentIDs;
+    return *studentIDs;
 }
 
 // mutators
@@ -56,4 +57,42 @@ void Faculty::setDepartment(string d) {
  */
 void Faculty::setStudentIDs(vector<int> *sid) {
     studentIDs = sid;
+}
+
+// functions
+/**
+ * prints out all of the faculty member's advisees.
+ */
+void Faculty::printAdvisees() {
+    if (studentIDs->size() == 0)
+        cout << "This faculty member has no advisees." << endl;
+
+    else {
+        cout << "Advisees IDs: " << endl;
+
+        for (int i = 0; i < studentIDs->size(); ++i) {
+            if (i == studentIDs->size() - 1)
+                cout << studentIDs->at(i) << endl;
+            else
+                cout << studentIDs->at(i) << ", ";
+        }
+    }
+}
+
+ostream& operator << (ostream &os, const Faculty &f) {
+    os << "Faculty information" << "\n";
+    os << "ID: " << f.id << "\n";
+    os << "Name: " << f.name << "\n";
+    os << "Level: " << f.level << "\n";
+    os << "Department: " << f.department << "\n";
+    os << "Advisees IDs: ";
+
+    for (int i = 0; i < f.studentIDs->size(); ++i) {
+        if (i == f.studentIDs->size() - 1)
+            os << f.studentIDs->at(i) << "\n";
+        else
+            os << f.studentIDs->at(i) << ", ";
+    }
+
+    return os;
 }

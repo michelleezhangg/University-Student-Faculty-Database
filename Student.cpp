@@ -49,7 +49,7 @@ int Student::getAdvisorID() {
 
 /** @return sr a StudentRecords object representing the records of the student. */
 StudentRecords Student::getStudentRecords() {
-    return sr;
+    return *sr;
 }
 
 // mutators
@@ -83,4 +83,17 @@ void Student::setAdvisorID(int a) {
  */
 void Student::setStudentRecords(StudentRecords *student_records) {
     sr = student_records;
+}
+
+// operator overloading
+ostream& operator << (ostream &os, const Student &s){
+    os << "Student Information" << "\n";
+    os << "ID: " << s.id << "\n";
+    os << "Name: " << s.name << "\n";
+    os << "Level: " << s.level << "\n";
+    os << "Major: " << s.major << "\n";
+    os << "GPA: " << s.gpa << "\n";
+    os << "Advisor ID: " << s.advisorID << "\n";
+
+    return os;
 }

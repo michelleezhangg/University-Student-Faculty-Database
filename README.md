@@ -10,25 +10,34 @@
 
 ## Source Files
 
-* StudentRecords.h
-* StudentRecords.cpp
-* FacultyRecords.h
-* FacultyRecords.cpp
-* Student.h
-* Student.cpp
-* Faculty.h
-* Faculty.cpp
 * BST.h
-* Database.h
 * Database.cpp
+* Database.h
+* Faculty.cpp
+* Faculty.h
+* FacultyRecords.cpp
+* FacultyRecords.h
+* GenStack.h
+* LinkedList.h
 * main.cpp
+* Person.cpp
+* Person.h
+* RollBack.cpp
+* RollBack.h
+* Serialization.cpp
+* Serialization.h
+* Student.cpp
+* Student.h
+* StudentRecords.cpp
+* StudentRecords.h
 
 * README.md
 * Makefile
 
 ## References
 
-* N/A
+* overloading operator << in the classes Student and Faculty.
+    * https://stackoverflow.com/questions/53211020/making-my-own-tostring-method-on-c-struct
 
 ## Known Errors
 
@@ -38,6 +47,7 @@
 
 * make all
 
-## Execution Instructions
+## Build Design
 
-* N/A
+* This database is implemented with at most 10000 students and 10000 faculty members. When an ID is randomized in the program, it should lie in the range 1-10000 for both students and faculty members.
+    * The IDs are randomize when adding in a new student or faculty member.

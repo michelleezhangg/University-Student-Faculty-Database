@@ -21,23 +21,13 @@ class Person {
         Person(); // default constructor
         ~Person(); // destructor
 
-        // accessors
-        int getID();
-        string getName();
-        string getLevel();
-
-        // mutators
-        void setID(int i);
-        void setName(string n);
-        void setLevel(string l);
-
         // overloaded operators
         bool operator == (Person &p);
         bool operator != (Person &p);
         bool operator > (Person &p);
         bool operator < (Person &p);
 
-    private:
+        // attributes
         int id;
         string name;
         string level;

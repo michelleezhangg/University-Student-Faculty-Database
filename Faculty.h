@@ -18,7 +18,7 @@
 class Faculty : public Person {
     public:
         Faculty(); // default constructor
-        Faculty(int i, string n, string l, string d, vector<int> *sid); // overloaded constructor
+        Faculty(int i, string n, string l, string d); // overloaded constructor
         ~Faculty(); // destructor
 
         // accessors
@@ -28,6 +28,10 @@ class Faculty : public Person {
         // mutators
         void setDepartment(string d);
         void setStudentIDs(vector<int> *sid);
+
+        // functions
+        void printAdvisees();
+        friend ostream& operator << (ostream &os, const Faculty &f);
 
     private:
         string department;

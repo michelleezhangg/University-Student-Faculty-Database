@@ -56,7 +56,7 @@ string FacultyRecords::getDepartment() {
 
 /** @return studentIDs a vector representing the collection of the faculty's students' IDs. */
 vector<int> FacultyRecords::getStudentIDs() {
-    return studentIDs;
+    return *studentIDs;
 }
 
 // mutators
