@@ -61,26 +61,52 @@ void Faculty::setStudentIDs(vector<int> *sid) {
 
 // functions
 /**
- * prints out all of the faculty member's advisees.
+ * returns all of the faculty member's advisees.
+ * handles the case when the faculty member has no advisees.
+ * @return advisees a string representing the faculty member's advisees.
  */
-void Faculty::printAdvisees() {
+string Faculty::getAdvisees() {
+    string advisees = "";
     if (studentIDs->size() == 0)
-        cout << "This faculty member has no advisees." << endl;
+        return "This faculty member has no advisees.\n";
 
     else {
-        cout << "Advisees IDs: " << endl;
+        advisees += "Advisees IDs: \n";
 
         for (int i = 0; i < studentIDs->size(); ++i) {
             if (i == studentIDs->size() - 1)
-                cout << studentIDs->at(i) << endl;
+                advisees += to_string(studentIDs->at(i)) + "\n";
             else
-                cout << studentIDs->at(i) << ", ";
+                advisees += to_string(studentIDs->at(i)) + ", ";
         }
     }
+
+    return advisees;
 }
 
+/**
+ * gets the faculty member's information in the form of a string.
+ * @return faculty_info a string representing the faculty member's information.
+ */
+string Faculty::getFacultyInfo() {
+    string faculty_info = "";
+
+    faculty_info += "Faculty Information\n";
+    faculty_info += "ID: " + to_string(id) + "\n";
+    faculty_info += "Name: " + name + "\n";
+    faculty_info += "Level: " + level + "\n";
+    faculty_info += "Department: " + department + "\n";
+    faculty_info += getAdvisees();
+
+    return faculty_info;
+}
+
+/**
+ * overloads the operator << for a Faculty object.
+ * @param f a Faculty object we wish to retrieve information from.
+ */
 ostream& operator << (ostream &os, const Faculty &f) {
-    os << "Faculty information" << "\n";
+    os << "Faculty Information" << "\n";
     os << "ID: " << f.id << "\n";
     os << "Name: " << f.name << "\n";
     os << "Level: " << f.level << "\n";

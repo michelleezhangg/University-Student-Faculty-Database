@@ -33,6 +33,8 @@ class Student : public Person {
         void setAdvisorID(int a);
         void setStudentRecords(StudentRecords *student_records);
 
+        // other functions
+        string getStudentInfo();
         friend ostream& operator << (ostream &os, const Student &s);
 
     private:

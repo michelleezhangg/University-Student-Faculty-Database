@@ -1,3 +1,14 @@
+/*
+* Name: Michelle Zhang
+* Student ID: 2380210
+* Chapman Email: mizhang@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* This is the implementation file for the Person class.
+* This is the base class for the Student Class and the Faculty Class.
+*/
+
 #include "Person.h"
 
 Person::Person() { // default constructor

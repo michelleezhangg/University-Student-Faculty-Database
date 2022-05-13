@@ -1,3 +1,13 @@
+/*
+* Name: Michelle Zhang
+* Student ID: 2380210
+* Chapman Email: mizhang@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* This is the implementation file for the Database Class.
+*/
+
 #include "Database.h"
 
 Database::Database() { // default constructor
@@ -11,13 +21,14 @@ Database::~Database() { // destructors
 }
 
 void Database::run() {
-    // check if files "facultyTable" & "studentTable" exist in current directories
+    // 1. check if files "facultyTable" & "studentTable" exist in current directories
         // if they do: put them in as data for masterStudent & masterFaculty (object serialization).
         // else: initialize masterStudent & masterFaculty as empty BSTs.
+    Serialization *s = new Serialization();
 
     int option = printMenu();
 
-    while (true) { // error handles user's input
+    while (true) {
 
         switch(option) {
             case 1:
@@ -99,7 +110,7 @@ int Database::printMenu() {
     cin >> input;
 
     // error handling: user input
-    while (input > 14 && input < 1) {
+    while (input > 14 || input < 1) {
         cout << "Please pick one of the options (1-14): ";
         cin >> input;
     }
@@ -201,7 +212,7 @@ void Database::printFacultyAdviseesInfo() {
 
             if (masterFaculty->idExists(id)) { // faculty is found
                 Faculty f = masterFaculty->getNode(id);
-                f.printAdvisees();
+                cout << f.getAdvisees() << endl;
                 break;
             } else // faculty is not found
                 cout << "That faculty does not exist in database." << endl;
@@ -274,10 +285,6 @@ void Database::addNewFaculty() {
 
     cout << "Department: ";
     cin >> department;
-
-    // randomizing student ID
-    while (masterStudent->idExists(id))
-        id = rand() % 10000;
 
     Faculty *f = new Faculty(id, name, level, department);
 }

@@ -14,7 +14,7 @@ Student::Student() { // default constructor
     major = "";
     gpa = 0.0;
     advisorID = -1;
-    sr = new StudentRecords(); //FIXME: inheritance
+    sr = new StudentRecords();
 }
 
 Student::Student(int i, string n, string l, string m, double g, int a) { // overloaded constructor
@@ -24,7 +24,7 @@ Student::Student(int i, string n, string l, string m, double g, int a) { // over
     major = m;
     gpa = g;
     advisorID = a;
-    sr = new StudentRecords(id, name, level, major, gpa, advisorID); //FIXME: inheritance
+    sr = new StudentRecords(id, name, level, major, gpa, advisorID);
 }
 
 Student::~Student() { // destructor
@@ -85,7 +85,29 @@ void Student::setStudentRecords(StudentRecords *student_records) {
     sr = student_records;
 }
 
-// operator overloading
+// other functions
+/**
+ * gets the student's information in the form of a string.
+ * @return student_info a string representing the student's information.
+ */
+string Student::getStudentInfo() {
+    string student_info = "";
+
+    student_info += "Student Information\n";
+    student_info += "ID: " + to_string(id) + "\n";
+    student_info += "Name: " + name + "\n";
+    student_info += "Level: " + level + "\n";
+    student_info += "Major: " + major + "\n";
+    student_info += "GPA:" + to_string(gpa) + "\n";
+    student_info += "Advisor ID: " + to_string(advisorID) + "\n";
+
+    return student_info;
+}
+
+/**
+ * overloads the operator << for a Student object.
+ * @param s a Student object we wish to retrieve information from.
+ */
 ostream& operator << (ostream &os, const Student &s){
     os << "Student Information" << "\n";
     os << "ID: " << s.id << "\n";
