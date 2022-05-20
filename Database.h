@@ -31,14 +31,14 @@ class Database {
         void printAllFaculty();                 // option 2
         void printStudentInfo();                // option 3
         void printFacultyInfo();                // option 4
-        void printFacultyInfoFromStudent();     // option 5
-        void printFacultyAdviseesInfo();        // option 6
+        void printAdvisorInfo();                // option 5
+        void printAdviseesInfo();               // option 6
         void addNewStudent();                   // option 7
         void deleteStudent();                   // option 8
         void addNewFaculty();                   // option 9
         void deleteFaculty();                   // option 10
-        void changeStudentAdvisor();            // option 11
-        void removeFacultyAdvisee();            // option 12
+        void changeAdvisor();                   // option 11
+        void removeAdvisee();                   // option 12
         void rollBack();                        // option 13
         void exit();                            // option 14
 

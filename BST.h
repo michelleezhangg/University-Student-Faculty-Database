@@ -306,9 +306,9 @@ bool BST<T>::deleteNode(T k) {
             parent->left = successor;
         else
             parent->right = successor;
-
-        return true;
     }
+
+    return true;
 }
 
 /* d represents the node to be delete */
@@ -324,7 +324,7 @@ TreeNode<T>* BST<T>::getSuccessor(TreeNode<T> *d) {
         current = current->left;
     }
 
-    return current; // check this
+    return current; // FIXME: check this
 }
 
 /**

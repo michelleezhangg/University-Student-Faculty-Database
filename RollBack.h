@@ -24,8 +24,7 @@ class RollBack {
         bool studentAction(Student *s, string a);
         bool facultyAction(Faculty *f, string a);
 
-        void undo();
-        void clear();
+        bool undo(BST<Student> *studentDB, BST<Faculty> *facultyDB);
 
     private:
         GenStack<Student*> studentDBHistory;

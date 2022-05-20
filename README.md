@@ -51,5 +51,6 @@
 
 ## Build Design
 
-* This database is implemented with at most 10000 students and 10000 faculty members. When an ID is randomized in the program, it should lie in the range 1-10000 for both students and faculty members.
-    * The IDs are randomize when adding in a new student or faculty member.
+* This database is implemented with at most 1000 students and 1000 faculty members. When an ID is randomized in the program, it should lie in the range 1-1000 for both students and faculty members.
+* You must add a faculty member before adding a student because a student needs to be initialized with an advisor. The program will tell you to do this.
+* When a new student is added, the program will randomly assign them an advisor.
