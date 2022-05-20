@@ -11,11 +11,41 @@
 #include "RollBack.h"
 
 RollBack::RollBack() { // default constructor
-    studentDBHistory = new GenStack <BST<Student> >();
-    facultyDBHistory = new GenStack <BST<Faculty> >();
+    studentDBHistory = GenStack<Student*>();
+    facultyDBHistory = GenStack<Faculty*>();
+    reverseAction = GenStack<string>();
+    numUndos = 0;
 }
 
-RollBack::~RollBack() { // destructor
-    delete studentDBHistory;
-    delete facultyDBHistory;
+RollBack::~RollBack() {} // destructor
+
+/***/
+bool RollBack::studentAction(Student *s, string a) {
+    if (numUndos > 5)
+        return false;
+    
+    ++numUndos;
+    studentDBHistory.push(s);
+    reverseAction.push(a);
+    return true;
+}
+
+/***/
+bool RollBack::facultyAction(Faculty *f, string a) {
+    if (numUndos > 5)
+        return false;
+    
+    facultyDBHistory.push(f);
+    reverseAction.push(a);
+    return true;
+}
+
+/***/
+void RollBack::undo() {
+
+}
+
+/***/
+void RollBack::clear() {
+
 }

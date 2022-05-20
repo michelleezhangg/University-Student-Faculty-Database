@@ -21,9 +21,17 @@ class RollBack {
         RollBack(); // default constructor
         ~RollBack(); // destructor
 
+        bool studentAction(Student *s, string a);
+        bool facultyAction(Faculty *f, string a);
+
+        void undo();
+        void clear();
+
     private:
-        GenStack< BST<Student> > *studentDBHistory;
-        GenStack< BST<Faculty> > *facultyDBHistory;
+        GenStack<Student*> studentDBHistory;
+        GenStack<Faculty*> facultyDBHistory;
+        GenStack<string> reverseAction;
+        int numUndos;
 };
 
 #endif

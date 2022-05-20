@@ -65,13 +65,13 @@ void Faculty::setStudentIDs(vector<int> *sid) {
  * handles the case when the faculty member has no advisees.
  * @return advisees a string representing the faculty member's advisees.
  */
-string Faculty::getAdvisees() {
+string Faculty::getAdviseesIDs() {
     string advisees = "";
     if (studentIDs->size() == 0)
         return "This faculty member has no advisees.\n";
 
     else {
-        advisees += "Advisees IDs: \n";
+        advisees += "Advisees IDs:\n";
 
         for (int i = 0; i < studentIDs->size(); ++i) {
             if (i == studentIDs->size() - 1)
@@ -96,7 +96,7 @@ string Faculty::getFacultyInfo() {
     faculty_info += "Name: " + name + "\n";
     faculty_info += "Level: " + level + "\n";
     faculty_info += "Department: " + department + "\n";
-    faculty_info += getAdvisees();
+    faculty_info += getAdviseesIDs();
 
     return faculty_info;
 }
@@ -121,4 +121,23 @@ ostream& operator << (ostream &os, const Faculty &f) {
     }
 
     return os;
+}
+
+/**
+ * adds an advisee ID to the vector of student IDs.
+ * @param id an integer representing the ID to add.
+ */
+void Faculty::addAdvisee(int id) {
+    studentIDs->push_back(id);
+}
+
+/**
+ * removes an advisee ID from the vector of student IDs.
+ * @param id an integer representing the ID to remove.
+ */
+void Faculty::removeAdvisee(int id) {
+    for (int i = 0; i < studentIDs->size(); ++i) {
+        if (studentIDs->at(i) == id)
+            studentIDs->erase(studentIDs->begin() + i); // https://www.cplusplus.com/reference/vector/vector/erase/
+    }
 }

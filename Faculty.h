@@ -30,8 +30,10 @@ class Faculty : public Person {
         void setStudentIDs(vector<int> *sid);
 
         // functions
-        string getAdvisees();
         string getFacultyInfo();
+        string getAdviseesIDs();
+        void addAdvisee(int id);
+        void removeAdvisee(int id);
         friend ostream& operator << (ostream &os, const Faculty &f);
 
     private:

@@ -13,18 +13,19 @@
 Database::Database() { // default constructor
     masterStudent = new BST<Student>();
     masterFaculty = new BST<Faculty>();
+    rb = new RollBack();
 }
 
 Database::~Database() { // destructors
     delete masterStudent;
     delete masterFaculty;
+    delete rb;
 }
 
 void Database::run() {
     // 1. check if files "facultyTable" & "studentTable" exist in current directories
         // if they do: put them in as data for masterStudent & masterFaculty (object serialization).
         // else: initialize masterStudent & masterFaculty as empty BSTs.
-    Serialization *s = new Serialization();
 
     int option = printMenu();
 
@@ -212,7 +213,7 @@ void Database::printFacultyAdviseesInfo() {
 
             if (masterFaculty->idExists(id)) { // faculty is found
                 Faculty f = masterFaculty->getNode(id);
-                cout << f.getAdvisees() << endl;
+                cout << f.getAdviseesIDs() << endl;
                 break;
             } else // faculty is not found
                 cout << "That faculty does not exist in database." << endl;

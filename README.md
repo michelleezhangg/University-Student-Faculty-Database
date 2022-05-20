@@ -38,6 +38,8 @@
 
 * overloading operator << in the classes Student and Faculty.
     * https://stackoverflow.com/questions/53211020/making-my-own-tostring-method-on-c-struct
+* removing an item from a vector
+    * https://www.cplusplus.com/reference/vector/vector/erase/ 
 
 ## Known Errors
 
