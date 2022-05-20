@@ -36,8 +36,8 @@ class Database {
         void deleteStudent();                   // option 8
         void addNewFaculty();                   // option 9
         void deleteFaculty();                   // option 10
-        void changeStudentAdvisors();           // option 11
-        void removeFacultyAdvisees();           // option 12
+        void changeStudentAdvisor();           // option 11
+        void removeFacultyAdvisee();           // option 12
         void rollBack();                        // option 13
         void exit();                            // option 14
 

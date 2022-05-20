@@ -24,6 +24,8 @@ void Serialization::readStudentFile() {
 
     if (ReadFile.is_open())
         cout << "can open" << endl; // will continue
+
+    ReadFile.close();
 }
 
 void Serialization::readFacultyFile() {
@@ -31,6 +33,8 @@ void Serialization::readFacultyFile() {
 
     if (ReadFile.is_open())
         cout << "can open" << endl; // will continue
+
+    ReadFile.close();
 }
 
 /* writing files */

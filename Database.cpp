@@ -62,10 +62,10 @@ void Database::run() {
                 deleteFaculty();
                 break;
             case 11:
-                changeStudentAdvisors();
+                changeStudentAdvisor();
                 break;
             case 12:
-                removeFacultyAdvisees();
+                removeFacultyAdvisee();
                 break;
             case 13:
                 rollBack();
@@ -197,7 +197,7 @@ void Database::printFacultyInfoFromStudent() {
 }
 
 /**
- * 
+ * prints the advisees of a faculty member
  */
 void Database::printFacultyAdviseesInfo() {
     while (true) {
@@ -287,6 +287,7 @@ void Database::addNewFaculty() {
     cin >> department;
 
     Faculty *f = new Faculty(id, name, level, department);
+    masterFaculty->insert(*f);
 }
 
 /**
@@ -299,15 +300,22 @@ void Database::deleteFaculty() {
 /**
  * option 11
  */
-void Database::changeStudentAdvisors() {
+void Database::changeStudentAdvisor() {
     
 }
 
 /**
  * option 12
  */
-void Database::removeFacultyAdvisees() {
-    // find faculty, modify faculty
+void Database::removeFacultyAdvisee() {
+    if (masterFaculty->isEmpty())
+        cout << "There are no faculty members in your database." << endl;
+    if (masterStudent->isEmpty())
+        cout << "There are no students in your database." << endl;
+
+    while (true){
+        cout << "Enter the student ID to remove from faculty: ";
+    }
 }
 
 /**

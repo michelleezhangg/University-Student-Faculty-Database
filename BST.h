@@ -8,6 +8,7 @@
 
 #ifndef BST_H
 #define BST_H
+
 #include <iostream>
 using namespace std;
 
@@ -65,6 +66,7 @@ class BST {
         T calcSum(TreeNode<T> *node);
         TreeNode<T>* getRoot();
 
+        // functions based on ID
         bool idExists(int id);
         void printNode(int id);
         T getNode(int id);
@@ -307,12 +309,22 @@ bool BST<T>::deleteNode(T k) {
 
         return true;
     }
-
 }
 
-template <class T>
 /* d represents the node to be delete */
+template <class T>
 TreeNode<T>* BST<T>::getSuccessor(TreeNode<T> *d) {
+    TreeNode<T> *sp = d;
+    TreeNode<T> *successor = d;
+    TreeNode<T> *current = d->right;
+
+    while (current != NULL) {
+        sp = successor;
+        successor = current;
+        current = current->left;
+    }
+
+    return current; // check this
 }
 
 /**
@@ -350,7 +362,31 @@ T BST<T>::getNode(int id) {
     TreeNode<T> *current = root;
 
     if (root == NULL)
-        return;
+        return T();
+    
+    else {
+        while (current->key.id != id) {
+            if (current == NULL)
+                return T();
+            else if (id < current->key.id)
+                current = current->left;
+            else    
+                current = current->right;
+        }
+    }
+    return current->key;
+}
+
+/**
+ * prints out the node of the tree given the ID.
+ * @param id an integer representing the ID that we wish to know
+ */
+template <class T>
+void BST<T>::printNode(int id) {
+    TreeNode<T> *current = root;
+
+    if (root == NULL)
+        return T();
     
     else {
         while (current->key.id != id) {
@@ -362,7 +398,7 @@ T BST<T>::getNode(int id) {
                 current = current->right;
         }
     }
-    return current->key;
+    cout << current->key;
 }
 
 #endif
