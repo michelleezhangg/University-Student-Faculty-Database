@@ -23,15 +23,15 @@ class Faculty : public Person {
 
         // accessors
         string getDepartment();
-        vector<int> getStudentIDs();
+        vector<int> getAdviseesIDs();
 
         // mutators
         void setDepartment(string d);
-        void setStudentIDs(vector<int> *sid);
+        void setAdviseesIDs(vector<int> *sid);
 
         // functions
         string getFacultyInfo();
-        string getAdviseesIDs();
+        string getStringAdviseesIDs();
         void addAdvisee(int id);
         void removeAdvisee(int id);
         friend ostream& operator << (ostream &os, const Faculty &f);

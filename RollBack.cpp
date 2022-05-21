@@ -84,7 +84,9 @@ bool RollBack::undo(BST<Student> *studentDB, BST<Faculty> *facultyDB) {
 
             if (action[0] == 'i') // delete the faculty to undo
                 facultyDB->deleteNode(*f);
+
                 //FIXME: solve advisor/advisee problem
+                
             else if (action[0] == 'd') // insert the faculty to undo
                 facultyDB->insert(*f);
         

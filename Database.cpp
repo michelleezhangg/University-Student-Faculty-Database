@@ -14,19 +14,18 @@ Database::Database() { // default constructor
     masterStudent = new BST<Student>();
     masterFaculty = new BST<Faculty>();
     rb = new RollBack();
+    s = new Serialization();
 }
 
 Database::~Database() { // destructors
     delete masterStudent;
     delete masterFaculty;
     delete rb;
+    delete s;
 }
 
 void Database::run() {
-    // 1. check if files "facultyTable" & "studentTable" exist in current directories
-        // if they do: put them in as data for masterStudent & masterFaculty (object serialization).
-        // else: initialize masterStudent & masterFaculty as empty BSTs.
-
+    //s->serialize();
     int option = printMenu();
 
     while (true) {
@@ -111,8 +110,9 @@ int Database::printMenu() {
     cin >> input;
 
     // error handling: user input
-    while (input > 14 || input < 1) {
-        cout << "Please pick one of the options (1-14): ";
+    while (input > 14 && input < 1) {
+        cout << "Invalid input." << endl;
+        cout << "Please enter an option (1-14): ";
         cin >> input;
     }
 
@@ -161,10 +161,11 @@ void Database::printStudentInfo() {
 
             // finds student
             if (masterStudent->idExists(id)) { // student is found
-                cout << masterStudent->getNode(id) << endl;
+                cout << endl << masterStudent->getNode(id) << endl;
                 break;
             } else // student is not found
                 cout << "That student does not exist in the database." << endl;
+                cout << "Please try again." << endl;
         }
     }
 }
@@ -187,10 +188,11 @@ void Database::printFacultyInfo() {
 
             // finds faculty
             if (masterFaculty->idExists(id)) { // faculty is found
-                cout << masterFaculty->getNode(id) << endl;
+                cout << endl << masterFaculty->getNode(id) << endl;
                 break;
             } else // faculty is not found
                 cout << "That faculty does not exist in the database." << endl;
+                cout << "Please try again." << endl;
         }
     }
 }
@@ -213,10 +215,11 @@ void Database::printAdvisorInfo() {
             // finds student
             if (masterStudent->idExists(id)) { // student is found
                 int advisorID = masterStudent->getNode(id).getAdvisorID();
-                cout << masterFaculty->getNode(advisorID) << endl;
+                cout << endl << masterFaculty->getNode(advisorID) << endl;
                 break;
             } else // student is not found
                 cout << "That student does not exist in the database." << endl;
+                cout << "Please try again." << endl;
         }
     }
 }
@@ -240,12 +243,15 @@ void Database::printAdviseesInfo() {
             if (masterFaculty->idExists(id)) { // faculty is found
                 Faculty f = masterFaculty->getNode(id);
 
+                cout << endl;
+
                 for (int i = 0; i < f.getAdviseesIDs().size(); ++i)
                     cout << masterStudent->getNode(f.getAdviseesIDs().at(i)) << endl;
 
                 break;
             } else // faculty is not found
                 cout << "That faculty does not exist in database." << endl;
+                cout << "Please try again." << endl;
         }
     }    
 }
@@ -302,7 +308,8 @@ void Database::addNewStudent() {
 
         Student *s = new Student(id, name, level, major, gpa, advisorID);
         masterStudent->insert(*s);
-        rb->studentAction(s, "is");
+
+        rb->studentAction(s, "is"); // rollback
     }
 }
 
@@ -332,11 +339,11 @@ void Database::deleteStudent() {
                 Faculty f = masterFaculty->getNode(advisorID);
                 f.removeAdvisee(id);
 
-                // FIXME: how to reassign modified advisor IDs
-                rb->studentAction(&s, "ds");
+                rb->studentAction(&s, "ds"); // roll back
                 break;
             } else // student is not found
                 cout << "That student does not exist in the database." << endl;
+                cout << "Please try again." << endl;
         }
     }
 }
@@ -376,6 +383,7 @@ void Database::addNewFaculty() {
 /**
  * option 10
  * delete a faculty member from the database given the student ID.
+ * the faculty member's advisee's advisor will be set to -1.
  * if the database contains no faculty members, a message will print out informing the user.
  */
 void Database::deleteFaculty() {
@@ -394,13 +402,18 @@ void Database::deleteFaculty() {
                 Faculty f = masterFaculty->getNode(id);
                 masterFaculty->deleteNode(f);
 
-                // remove faculty from advisees
-                // FIXME: code this later
+                // remove faculty from advisees (set to NULL)
+                for (int i = 0; i < f.getAdviseesIDs().size(); ++i) {
+                    int adviseeID = f.getAdviseesIDs().at(i);
+                    Student s = masterStudent->getNode(adviseeID);
+                    s.setAdvisorID(-1);
+                }
 
-                rb->facultyAction(&f, "df");
+                rb->facultyAction(&f, "df"); // rollback
                 break;
             } else // faculty is not found
                 cout << "That faculty does not exist in the database." << endl;
+                cout << "Please try again." << endl;
         }
     }
 }
@@ -433,6 +446,7 @@ void Database::changeAdvisor() {
             break;
         else
             cout << "That student does not exist in the database." << endl;
+            cout << "Please try again." << endl;
     }
 
     // get user's input: faculty ID
@@ -444,6 +458,7 @@ void Database::changeAdvisor() {
             break;
         else
             cout << "That faculty does not exist in the database." << endl;
+            cout << "Please try again." << endl;
     }
 
     // modifying advisor & advisee for the student & faculty
@@ -457,19 +472,82 @@ void Database::changeAdvisor() {
 /**
  * option 12
  * removes a faculty member's advisee given the faculty member's ID and the advisee's ID.
+ * prompts for the advisee's new advisor's ID and assigns that to the removed advisee's advisor.
  * if the database contains no faculty members, a message will print out informing the user.
  * if the database contains no students, a message will print out informing the user.
  */
 void Database::removeAdvisee() {
+    // checks if any tree is empty
+    if (masterFaculty->isEmpty())
+        cout << "There are no faculty members in your database." << endl;
+        return;
+    if (masterStudent->isEmpty())
+        cout << "There are no students in your database." << endl;
+        return;
+
+    int studentID;
+    int facultyID;
+    int advisorID;
+
+    // get user's input: faculty ID
+    while (true) {
+        cout << "Please enter the faculty ID: ";
+        cin >> facultyID;
+
+        if (masterFaculty->idExists(facultyID))
+            break;
+        else
+            cout << "That faculty does not exist in the database." << endl;
+            cout << "Please try again." << endl;
+    }
+
+    // get user's input: student ID
+    while (true) {
+        cout << "Please enter the student ID: ";
+        cin >> studentID;
+
+        if (masterStudent->idExists(studentID))
+            break;
+        else
+            cout << "That student does not exist in the database." << endl;
+            cout << "Please try again." << endl;
+    }
+
+    // get user's input: new advisor ID
+    while (true) {
+        cout << "Please enter the new advisor ID: ";
+        cin >> advisorID;
+
+        if (masterFaculty->idExists(advisorID))
+            break;
+        else
+            cout << "That faculty does not exist in the database." << endl;
+            cout << "Please try again." << endl;
+    }
     
+    // modifying advisor & advisee for the student & faculty
+    Faculty f = masterFaculty->getNode(facultyID);
+    Student s = masterStudent->getNode(studentID);
+
+    f.removeAdvisee(studentID);
+    s.setAdvisorID(advisorID);
 }
 
 /**
  * option 13
+ * undos the previous action.
+ * if cannot undo, a message will print informing the user.
  */
-void Database::rollBack() {}
+void Database::rollBack() {
+    if (!rb->undo(masterStudent, masterFaculty))
+        cout << "Cannot undo" << endl;
+}
 
 /**
+ * exits the program using serialization
  * option 14
  */
-void Database::exit() {}
+void Database::exit() {
+    s->serialize(masterStudent, masterFaculty);
+    cout << "Exiting program" << endl;
+}

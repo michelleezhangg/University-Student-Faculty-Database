@@ -46,6 +46,7 @@ class Database {
         BST<Student> *masterStudent;
         BST<Faculty> *masterFaculty;
         RollBack *rb;
+        Serialization *s;
 };
 
 #endif

@@ -14,7 +14,14 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
+#include <time.h>
 #include <exception>
+
+#include "BST.h"
+#include "Student.h"
+#include "Faculty.h"
+
 using namespace std;
 
 class Serialization {
@@ -23,15 +30,19 @@ class Serialization {
         ~Serialization(); // destructor
 
         // read files
-        void readStudentFile();
-        void readFacultyFile();
+        void readStudentFile(BST<Student> *sdb);
+        void readFacultyFile(BST<Faculty> *fdb);
+
+        // write students/faculties
+        void populateStudentDB(BST<Student> *sdb);
+        void populateFacultyDB(BST<Faculty> *fdb);
 
         // write files
-        void writeStudentFile();
-        void writeFacultyFile();
+        void writeStudentFile(TreeNode<Student> *s, BST<Student> *sdb);
+        void writeFacultyFile(TreeNode<Faculty> *f, BST<Faculty> *fdb);
 
         // serialize
-        void serialize();
+        void serialize(BST<Student> *sdb, BST<Faculty> *fdb);
 };
 
 #endif

@@ -65,6 +65,7 @@ class BST {
         void recPrint(TreeNode<T> *node);
         T calcSum(TreeNode<T> *node);
         TreeNode<T>* getRoot();
+        int getSize();
 
         // functions based on ID
         bool idExists(int id);
@@ -72,6 +73,7 @@ class BST {
         T getNode(int id);
     private:
         TreeNode<T> *root;
+        int size;
 };
 
 /* implementation for the BST class. */
@@ -206,7 +208,7 @@ void BST<T>::insert(T value) {
             }
         }
     }
-    
+    ++size; // increment size
 }
 
 /**
@@ -245,6 +247,8 @@ bool BST<T>::deleteNode(T k) {
     if (isEmpty())
         return false; // empty tree
 
+    --size; // decrement size
+    
     // search for node
     TreeNode<T> *parent = NULL;
     TreeNode<T> *current = root;
@@ -399,6 +403,11 @@ void BST<T>::printNode(int id) {
         }
     }
     cout << current->key;
+}
+
+template <class T>
+int BST<T>::getSize() {
+    return size;
 }
 
 #endif

@@ -38,7 +38,7 @@ string Faculty::getDepartment() {
 }
 
 /** @return studentIDs a vector representing the collection of faculty member's student advisees' IDs. */
-vector<int> Faculty::getStudentIDs() {
+vector<int> Faculty::getAdviseesIDs() {
     return *studentIDs;
 }
 
@@ -55,7 +55,7 @@ void Faculty::setDepartment(string d) {
  * sets the private member: studentIDs.
  * @param sid a vector representing the collection of faculty member's student advisees' IDs.
  */
-void Faculty::setStudentIDs(vector<int> *sid) {
+void Faculty::setAdviseesIDs(vector<int> *sid) {
     studentIDs = sid;
 }
 
@@ -65,7 +65,7 @@ void Faculty::setStudentIDs(vector<int> *sid) {
  * handles the case when the faculty member has no advisees.
  * @return advisees a string representing the faculty member's advisees.
  */
-string Faculty::getAdviseesIDs() {
+string Faculty::getStringAdviseesIDs() {
     string advisees = "";
     if (studentIDs->size() == 0)
         return "This faculty member has no advisees.\n";
@@ -96,7 +96,7 @@ string Faculty::getFacultyInfo() {
     faculty_info += "Name: " + name + "\n";
     faculty_info += "Level: " + level + "\n";
     faculty_info += "Department: " + department + "\n";
-    faculty_info += getAdviseesIDs();
+    faculty_info += getStringAdviseesIDs();
 
     return faculty_info;
 }

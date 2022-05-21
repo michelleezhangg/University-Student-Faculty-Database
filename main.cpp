@@ -9,17 +9,11 @@
 */
 
 #include "Database.h"
-#include <exception>
 
 int main(int argc, char** argv) {
-    try {
-        Database *db = new Database();
-        db->run();
+    Database *db = new Database();
+    db->run();
 
-        delete db;
-    } catch (runtime_error &excpt) { // error handling
-        cout << excpt.what() << endl;
-    }
-
+    delete db;
     return 0;
 }
