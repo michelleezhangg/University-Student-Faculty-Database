@@ -1,0 +1,23 @@
+3
+
+-----------------
+rene german
+645
+prof
+cs
+1
+293
+
+-----------------
+wood harter
+645
+professor
+cs
+0
+
+-----------------
+rao ali
+645
+prof
+cs
+0
