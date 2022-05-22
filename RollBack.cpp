@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -30,13 +30,13 @@ RollBack::~RollBack() {} // destructor
  * @return true
  * @return false 
  */
-bool RollBack::studentAction(Student *s, string a) {
+bool RollBack::studentAction(string a, Student *s) {
     if (numUndos > 5)
         return false;
     
     ++numUndos;
-    studentDBHistory.push(s);
     reverseAction.push(a);
+    studentDBHistory.push(s);
     return true;
 }
 
@@ -51,12 +51,12 @@ bool RollBack::studentAction(Student *s, string a) {
  * @return true if 
  * @return false 
  */
-bool RollBack::facultyAction(Faculty *f, string a) {
+bool RollBack::facultyAction(string a, Faculty *f) {
     if (numUndos > 5)
         return false;
     
-    facultyDBHistory.push(f);
     reverseAction.push(a);
+    facultyDBHistory.push(f);
     return true;
 }
 
@@ -67,33 +67,58 @@ bool RollBack::facultyAction(Faculty *f, string a) {
  * @return false if the undo did not work
  */
 bool RollBack::undo(BST<Student> *studentDB, BST<Faculty> *facultyDB) {
-    if (numUndos > 0) {
+    if (numUndos != 0) {
         string action = reverseAction.pop();
-        if (action[1] == 's') {
-            Student *s = studentDBHistory.pop();
 
-            if (action[0] == 'i') // delete the student to undo
-                studentDB->deleteNode(*s);
-            else if (action[0] == 'd') // insert the student to undo
-                studentDB->insert(*s);
+        Student *s;
+        Faculty *f;
 
-        } 
+        if (action.find("student") != string::npos)// 
+            s = studentDBHistory.pop();
+
         
-        else if (action[1] == 'f') {
-            Faculty *f = facultyDBHistory.pop();
+        else if (action.find("faculty") != string::npos)
+            f = facultyDBHistory.pop();
 
-            if (action[0] == 'i') // delete the faculty to undo
-                facultyDB->deleteNode(*f);
+        if (action == "add student") {
+            studentDB->deleteNode(*s);
 
-                //FIXME: solve advisor/advisee problem
-                
-            else if (action[0] == 'd') // insert the faculty to undo
-                facultyDB->insert(*f);
-        
+            cout << "---------------------------------" << endl;
+            cout << "successful undo" << endl;
+            cout << "---------------------------------" << endl;
         }
+
+        else if (action == "add faculty") {
+            facultyDB->deleteNode(*f);
+
+            cout << "---------------------------------" << endl;
+            cout << "Successful undo" << endl;
+            cout << "---------------------------------" << endl;
+        }
+
+        else if (action == "delete student") {
+            studentDB->insert(*s);
+
+            cout << "---------------------------------" << endl;
+            cout << "Successful undo" << endl;
+            cout << "---------------------------------" << endl;
+        }
+
+        else if (action == "delete faculty") {
+            facultyDB->insert(*f);
+
+            cout << "---------------------------------" << endl;
+            cout << "Successful undo" << endl;
+            cout << "---------------------------------" << endl;
+        }
+
+        else
+            cout << endl << "ERROR" << endl;
+
         --numUndos;
-        cout << "num undos: " << numUndos << endl; // test
+        cout << "Number of undos left: " << numUndos << endl;
         return true;
     }
+    
     return false;
 }

@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 

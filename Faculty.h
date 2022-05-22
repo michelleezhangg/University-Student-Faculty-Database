@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -23,21 +23,25 @@ class Faculty : public Person {
 
         // accessors
         string getDepartment();
-        vector<int> getAdviseesIDs();
+        vector<int> getAdviseeIDs();
+        int getNumAdvisees();
 
         // mutators
         void setDepartment(string d);
+        void setNumAdvisees(int na);
         void setAdviseesIDs(vector<int> *sid);
 
         // functions
-        string getFacultyInfo();
-        string getStringAdviseesIDs();
         void addAdvisee(int id);
         void removeAdvisee(int id);
+
+        string getFacultyInfo();
+        string getAdviseesIDs();
         friend ostream& operator << (ostream &os, const Faculty &f);
 
-    private:
+        // attributes
         string department;
+        int numAdvisees;
         vector<int> *studentIDs;
         FacultyRecords *fr;
 };

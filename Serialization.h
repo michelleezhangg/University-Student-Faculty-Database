@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <vector>
 #include <time.h>
 #include <exception>
@@ -30,19 +31,15 @@ class Serialization {
         ~Serialization(); // destructor
 
         // read files
-        void readStudentFile(BST<Student> *sdb);
-        void readFacultyFile(BST<Faculty> *fdb);
-
-        // write students/faculties
-        void populateStudentDB(BST<Student> *sdb);
-        void populateFacultyDB(BST<Faculty> *fdb);
+        void readStudentFile(BST<Student> *studentDB);
+        void readFacultyFile(BST<Faculty> *facultyDB);
 
         // write files
-        void writeStudentFile(TreeNode<Student> *s, BST<Student> *sdb);
-        void writeFacultyFile(TreeNode<Faculty> *f, BST<Faculty> *fdb);
+        void writeStudentFile(TreeNode<Student> *s, BST<Student> *studentDB);
+        void writeFacultyFile(TreeNode<Faculty> *f, BST<Faculty> *facultyDB);
 
-        // serialize
-        void serialize(BST<Student> *sdb, BST<Faculty> *fdb);
+        // serialize (core funcion)
+        void serialize(BST<Student> *studentDB, BST<Faculty> *facultyDB);
 };
 
 #endif

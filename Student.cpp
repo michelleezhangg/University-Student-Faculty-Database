@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -54,7 +54,7 @@ StudentRecords Student::getStudentRecords() {
 
 // mutators
 /**
- * sets the private member: major.
+ * sets the major of the student.
  * @param m a string representing the major of the student.
  */
 void Student::setMajor(string m) {
@@ -62,7 +62,7 @@ void Student::setMajor(string m) {
 }
 
 /**
- * sets the private member: gpa.
+ * sets the gpa of the student.
  * @param g a double representing the gpa of the student.
  */
 void Student::setGPA(double g) {
@@ -70,7 +70,7 @@ void Student::setGPA(double g) {
 }
 
 /**
- * sets the private member: advisorID.
+ * sets the advisor ID of the student.
  * @param a an integer representing the advisor's ID of the student.
  */
 void Student::setAdvisorID(int a) {
@@ -78,7 +78,7 @@ void Student::setAdvisorID(int a) {
 }
 
 /**
- * sets the private member: sr.
+ * sets the student record of the student.
  * @param student_records a StudentRecords object representing the records of the student.
  */
 void Student::setStudentRecords(StudentRecords *student_records) {

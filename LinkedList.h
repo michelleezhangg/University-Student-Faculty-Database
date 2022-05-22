@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -96,46 +96,46 @@ DoublyLinkedList<T>::~DoublyLinkedList(){ // destructor
     }
 }
 
-/*
-* Inserts a List Node of data d, type T at the front of the Doubly Linked List and updates pointers.
-* @param T d A type T representing the data of the List Node we want to insert.
+/**
+* inserts a List Node of data d, type T at the front of the Doubly Linked List.
+* @param d the data of the List Node we want to insert.
 */
 template <class T>
 void DoublyLinkedList<T>::insertFront(T d){
     ListNode<T> *node = new ListNode<T>(d);
 
-    if (isEmpty()){
+    if (isEmpty())
         back = node;
-    } else {
+    else 
         node->next = front;
         front->prev = node;
-    }
+    
     front = node;
     ++size;
 }
 
-/*
-* Inserts a List Node of data d, type T at the back of the Doubly Linked List and updates pointers.
-* @param T d A type T representing the data of the List Node we want to insert.
+/**
+* inserts a List Node of data d at the back of the Doubly Linked List.
+* @param d the data of the List Node we want to insert.
 */
 template <class T>
 void DoublyLinkedList<T>::insertBack(T d){
     ListNode<T> *node = new ListNode<T>(d);
 
-    if (isEmpty()){
+    if (isEmpty())
         front = node;
-    } else {
+    else
         node->prev = back;
         back->next = node;
-    }
+    
     back = node;
     ++size;
 }
 
-/*
-* Removes the front element in the Doubly Linked List and updates pointers.
-* @return T data A type T representing the data of the removed List Node.
-* Throws an error if the list is empty (nothing can be removed from an empty list).
+/**
+* removes the front element in the Doubly Linked List.
+* @return T data the data of the List Node removed.
+* throws an error if the list is empty (nothing can be removed from an empty list).
 */
 template <class T>
 T DoublyLinkedList<T>::removeFront(){
@@ -145,11 +145,11 @@ T DoublyLinkedList<T>::removeFront(){
 
     ListNode<T> *temp = front;
 
-    if (front->next == NULL){ // only one node in list
+    if (front->next == NULL) // only one node in list
         back = NULL;
-    } else { // more than one node in list
+    else // more than one node in list
         front->next->prev = NULL; 
-    }
+    
     front = front->next;
     temp->next = NULL;
     T data = temp->data;
@@ -158,10 +158,10 @@ T DoublyLinkedList<T>::removeFront(){
     return data;
 }
 
-/*
-* Removes the back element in the Doubly Linked List and updates pointers.
-* @return T data A type T representing the data of the removed List Node.
-* Throws an error if the list is empty (nothing can be removed from an empty list).
+/**
+* removes the back element in the Doubly Linked List.
+* @return the data of the removed List Node.
+* throws an error if the list is empty (nothing can be removed from an empty list).
 */
 template <class T>
 T DoublyLinkedList<T>::removeBack(){
@@ -185,11 +185,10 @@ T DoublyLinkedList<T>::removeBack(){
     return data;
 }
 
-/*
-* Finds and returns the position of the value we want to find.
-* @param T value A type T representing the value we want to find.
-* @return int pos An integer representing the position of the value we want to find.
-* Returns -1 if the value does not exist in the list.
+/**
+* finds and returns the position of the value we want to find.
+* @param value the value we want to find.
+* @return pos the position of the value we want to find and -1 if that value cannot be found in the Doubly Linked List.
 */
 template <class T>
 int DoublyLinkedList<T>::find(T value){
@@ -209,11 +208,10 @@ int DoublyLinkedList<T>::find(T value){
     return pos;
 }
 
-/*
-* Removes a List Node with the data value value, type T and returns its data.
-* @param T value A type T representing the data of the List Node we want to remove.
-* @return T data A type T representing the data of the List Node we removed.
-* Returns -1 if the value does not exist in the list.
+/**
+* removes a List Node with the data value value and returns its data.
+* @param value A type T representing the data of the List Node we want to remove.
+* @return the data of the List Node we removed and -1 if that data value cannot be found in the Doubly Linked List.
 */
 template <class T>
 T DoublyLinkedList<T>::removeNode(T value){
@@ -261,33 +259,25 @@ unsigned int DoublyLinkedList<T>::getSize(){
     return size;
 }
 
-/* 
-* @return A boolean representing whether the stack is empty or not.
-* true represents empty.
-* false represents not empty.
-*/
+/* @return A boolean representing whether the stack is empty or not. */
 template <class T>
 bool DoublyLinkedList<T>::isEmpty(){
     return (size == 0);
 }
 
-/* @return The data, type T, of private member variable List Node back */
+/** @return The data, type T, of private member variable List Node back */
 template <class T>
 T DoublyLinkedList<T>::getBackData(){
     return back->data;
 }
 
-/* @return The data, type T, of private member variable List Node front */
+/** @return The data, type T, of private member variable List Node front */
 template <class T>
 T DoublyLinkedList<T>::getFrontData(){
     return front->data;
 }
 
-/*
-* Prints out the Doubly Linked Lists including the front, rear, and each of the nodes' prev and next pointers, and its data.
-* @param bool printLink A boolean representing if the Doubly Linked List is printable.
-* For testing purposes.
-*/
+/** prints out the Doubly Linked Lists including the front, rear, and each of the nodes' prev and next pointers, and its data. */
 template <class T>
 void DoublyLinkedList<T>::printList(bool printLink){
     ListNode<T> *curr = front;

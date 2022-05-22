@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -37,14 +37,19 @@ string Faculty::getDepartment() {
     return department;
 }
 
+/** @return numAdvisees an integer representing the number of advisees this faculty member has. */
+int Faculty::getNumAdvisees() {
+    return numAdvisees;
+}
+
 /** @return studentIDs a vector representing the collection of faculty member's student advisees' IDs. */
-vector<int> Faculty::getAdviseesIDs() {
+vector<int> Faculty::getAdviseeIDs() {
     return *studentIDs;
 }
 
 // mutators
 /**
- * sets the private member: department.
+ * sets the department of the faculty member.
  * @param d a string representing the department of the faculty member.
  */
 void Faculty::setDepartment(string d) {
@@ -52,7 +57,7 @@ void Faculty::setDepartment(string d) {
 }
 
 /**
- * sets the private member: studentIDs.
+ * sets the student ID vector of the faculty member.
  * @param sid a vector representing the collection of faculty member's student advisees' IDs.
  */
 void Faculty::setAdviseesIDs(vector<int> *sid) {
@@ -65,7 +70,7 @@ void Faculty::setAdviseesIDs(vector<int> *sid) {
  * handles the case when the faculty member has no advisees.
  * @return advisees a string representing the faculty member's advisees.
  */
-string Faculty::getStringAdviseesIDs() {
+string Faculty::getAdviseesIDs() {
     string advisees = "";
     if (studentIDs->size() == 0)
         return "This faculty member has no advisees.\n";
@@ -96,7 +101,7 @@ string Faculty::getFacultyInfo() {
     faculty_info += "Name: " + name + "\n";
     faculty_info += "Level: " + level + "\n";
     faculty_info += "Department: " + department + "\n";
-    faculty_info += getStringAdviseesIDs();
+    faculty_info += getAdviseesIDs();
 
     return faculty_info;
 }
@@ -140,4 +145,12 @@ void Faculty::removeAdvisee(int id) {
         if (studentIDs->at(i) == id)
             studentIDs->erase(studentIDs->begin() + i); // https://www.cplusplus.com/reference/vector/vector/erase/
     }
+}
+
+/**
+ * sets the number of advisees a faculty member has.
+ * @param na an integer representing the number of advisees a faculty member has.
+ */
+void Faculty::setNumAdvisees(int na) {
+    numAdvisees = na;
 }

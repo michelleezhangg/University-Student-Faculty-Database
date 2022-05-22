@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -22,9 +22,10 @@ class Database {
         Database(); // default constructor
         ~Database(); // destructor
 
-        void run(); // core function
+        void simulate(); // core function
 
         // auxiliary functions
+        void readFiles();
         int printMenu();
 
         void printAllStudents();                // option 1
@@ -40,7 +41,7 @@ class Database {
         void changeAdvisor();                   // option 11
         void removeAdvisee();                   // option 12
         void rollBack();                        // option 13
-        void exit();                            // option 14
+        void exitProgram();                            // option 14
 
     private:
         BST<Student> *masterStudent;

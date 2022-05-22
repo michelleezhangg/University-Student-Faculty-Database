@@ -9,11 +9,14 @@
 */
 
 #include "Database.h"
+#include "Serialization.h"
 
 int main(int argc, char** argv) {
-    Database *db = new Database();
-    db->run();
+    Database *database = new Database();
 
-    delete db;
+    database->readFiles();
+    database->simulate();
+
+    delete database;
     return 0;
 }

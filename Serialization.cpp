@@ -1,7 +1,7 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
 
@@ -15,190 +15,242 @@ Serialization::Serialization() {} // default constructor
 Serialization::~Serialization() {} // destructor
 
 /* reading files */
-/***/
+/**
+ * reads the file studentTable.txt and populates the database with the contents of that file if it exists.
+ * @param studentDB the database to populate if studentTable.txt exists.
+ */
 void Serialization::readStudentFile(BST<Student> *studentDB) {
-    ifstream ReadFile("studentTable.txt");
+    ifstream studentFile;
 
-    // if file exists / can be opened
-    if (ReadFile.is_open()) {
-        ReadFile.open("studentTable.txt");
-        populateStudentDB(studentDB);
-    }
-
-    // if file does not exist, do nothing
-    ReadFile.close();
-}
-
-/***/
-void Serialization::readFacultyFile(BST<Faculty> *facultyDB) {
-    ifstream ReadFile("facultyTable.txt");
-
-    // if file exists
-    if (ReadFile.is_open()) {
-        ReadFile.open("facultyTable.txt");
-        populateFacultyDB(facultyDB);
-    }
-
-    // if file does not exist, do nothing
-    ReadFile.close();
-}
-
-/***/
-void Serialization::populateStudentDB(BST<Student> *studentDB) {
-    ifstream ReadFile("studentTable.txt");
-
-    string str_id = "";
+    string line = "";
+    string title = "";
+    string divider = "";
     string name = "";
     string level = "";
     string major = "";
-    string str_gpa = "";
-    string str_advisorID = "";
+    
+    string adID = ""; // need to turn into int
+    string stuID = "";
+    string GPA = "";
 
-    int id = 0;
     double gpa = 0.0;
     int advisorID = 0;
+    int studentID = 0;
 
-    string line = "";
+    stringstream id;
+    stringstream aID;
 
-    // gets number of students in database
-    getline(ReadFile, line);
-    int numStudent = stoi(line);
+    studentFile.open("studentTable.txt");
 
-    // populates masterStudent
-    while (getline(ReadFile, line)) {
-        for (int i = 0; i < numStudent; ++i) {
-            getline(ReadFile, str_id);
-            getline(ReadFile, name);
-            getline(ReadFile, level);
-            getline(ReadFile, major);
-            getline(ReadFile, str_gpa);
-            getline(ReadFile, str_advisorID);
+    // if file exists / can be opened
+    if(studentFile.is_open()) {
+        // first line of file: number of students in database
+        getline(studentFile,line);
 
-            id = stoi(str_id);
-            gpa = stod(str_gpa);
-            advisorID = stoi(str_advisorID);
+        if (!line.empty()) {
+            int numStudents = stoi(line);
 
-            Student s = Student(id, name, level, major, gpa, advisorID);
-            studentDB->insert(s);
+            getline(studentFile, title);
 
-            getline(ReadFile, line); // read newline between students
+            while(getline(studentFile, divider)) {
+
+                for (int i = 0; i < numStudents; ++i){
+                    getline(studentFile, name);
+
+                    getline(studentFile, stuID);
+                    id << stuID;
+                    id >> studentID;
+
+                    getline(studentFile, level);
+                    getline(studentFile, major);
+
+                    getline(studentFile, GPA);
+                    gpa = stod(GPA);
+
+                    getline(studentFile, adID);
+                    aID << stuID;
+                    aID >> studentID;
+
+                    getline(studentFile, divider);
+
+                    Student student = Student(studentID, name, level, major, gpa, advisorID);
+                    studentDB->insert(student);  
+                }
+            }
         }
     }
 
-    ReadFile.close();
+    studentFile.close();
 }
 
-/***/
-void Serialization::populateFacultyDB(BST<Faculty> *facultyDB) {
-    ifstream ReadFile("facultyTable.txt");
+/**
+ * read the file facultyTable.txt and populates the database with the contents of that file if it exists.
+ * @param facultyDB the database to populate if the file facultyTable.txt exists.
+ */
+void Serialization::readFacultyFile(BST<Faculty> *facultyDB) {
+    ifstream facultyFile;
 
-    string str_id = "";
+    string line = "";
+    string title = "";
+    string divider = "";
     string name = "";
     string level = "";
     string department = "";
-    string numAdvisees = "";
-    string str_adviseeID = "";
     
-    int id = 0;
+    string fID = ""; //need to turn into int
+    string sID = "";
+    string nA = "";
+
+    int numAdvisees = 0;
     int adviseeID = 0;
-    string line = "";
+    int facultyID = 0;
 
-    // gets number of faculty in database
-    getline(ReadFile, line);
-    int numFaculty = stoi(line);
+    stringstream facadviseeID;
+    stringstream facID;
+    stringstream facAdvisees;
 
-    // populates masterFaculty
-    while (getline(ReadFile, line)) { // 
-        for (int i = 0; i < numFaculty; ++i) {
-            getline(ReadFile, str_id);
-            getline(ReadFile, name);
-            getline(ReadFile, level);
-            getline(ReadFile, department);
-            
-            id = stoi(str_id);
+    facultyFile.open("facultyTable.txt");
 
-            Faculty f = Faculty(id, name, level, department);
+    // if file exists / can be opened
+    if(facultyFile.is_open()) {
+        // first line of file: number of faculty in database
+        getline(facultyFile,line);
 
-            getline(ReadFile, numAdvisees);
-            for (int i = 0; i < stoi(numAdvisees); ++i) {
-                getline(ReadFile, str_adviseeID);
-                adviseeID = stoi(str_adviseeID);
-                f.addAdvisee(adviseeID);
+        if (!line.empty()) {
+            int numFaculty = stoi(line);
+
+            getline(facultyFile, title);
+
+            while(getline(facultyFile, divider)) {
+
+                for (int i = 0; i < numFaculty; ++i) {
+                    getline(facultyFile, name);
+
+                    getline(facultyFile, fID);
+                    facID << fID;
+                    facID >> facultyID;
+
+                    getline(facultyFile, level);
+                    getline(facultyFile, department);
+
+                    getline(facultyFile, nA);
+                    facAdvisees << nA;
+                    facAdvisees >> numAdvisees;
+
+                    Faculty faculty = Faculty(facultyID, name, level, department);
+
+                    for (int i = 0; i < numAdvisees; ++i) {
+                        getline(facultyFile, sID);
+                        facadviseeID << sID;
+                        facadviseeID >> adviseeID;
+                        faculty.addAdvisee(adviseeID);
+                    }
+
+                    getline(facultyFile, divider);
+                    getline(facultyFile, divider);
+        
+                    facultyDB->insert(faculty);  
+                }
             }
-
-            facultyDB->insert(f);
-
-            getline(ReadFile, line); // read newline between faculties
         }
     }
-    ReadFile.close();
+
+    facultyFile.close();
 }
 
 /* writing files */
-/***/
-void Serialization::writeStudentFile(TreeNode<Student> *node, BST<Student> *studentDB) {
-    ofstream WriteFile("studentTable.txt", ios_base::app); //https://en.cppreference.com/w/cpp/io/ios_base/openmode
+/**
+ * writes the student BST database to a file, studentTable.txt.
+ * @param student the first student used to traverse through the student BST.
+ * @param studentDB the database to traverse through to write to studentTable.txt file.
+ * recursive
+ */
+void Serialization::writeStudentFile(TreeNode<Student> *student, BST<Student> *studentDB) {
+    ofstream WriteFile;
 
-    if (studentDB != NULL) {
-        WriteFile << endl;
-        WriteFile << node->key.id << endl;
-        WriteFile << node->key.name << endl;
-        WriteFile << node->key.level << endl;
-        WriteFile << node->key.getMajor() << endl;
-        WriteFile << node->key.getGPA() << endl;
-        WriteFile << node->key.getAdvisorID() << endl;
+    WriteFile.open("studentTable.txt", ios_base::app);
 
+    if(studentDB != NULL) {
+        WriteFile << endl << "-----------------" << endl;
+        WriteFile << student->key.name << endl;
+        WriteFile << student->key.id << endl;
+        WriteFile << student->key.level << endl;
+        WriteFile << student->key.getMajor() << endl;
+        WriteFile << student->key.getGPA() << endl;
+        WriteFile << student->key.getAdvisorID() << endl;
+        
         // recursion
-        if (node->left != NULL)
-            writeStudentFile(node->left, studentDB);
-        if (node->right != NULL)
-            writeStudentFile(node->right, studentDB);
+        if (student->left != NULL)
+            writeStudentFile(student->left, studentDB);
+        else if (student->right != NULL)
+            writeStudentFile(student->right , studentDB);
     }
+    
+    else
+        cout << "The student database is empty" << endl;
+    
 
     WriteFile.close();
 }
 
-/***/
-void Serialization::writeFacultyFile(TreeNode<Faculty> *node, BST<Faculty> *facultyDB) {
-    ofstream WriteFile("facultyTable.txt", ios_base::app); //https://en.cppreference.com/w/cpp/io/ios_base/openmode
+/**
+ * * writes the faculty BST database to a file, facultyTable.txt.
+ * @param faculty the first faculty used to traverse through the faculty BST.
+ * @param studentDB the database to traverse through to write to facultyTable.txt file.
+ * recursive
+ */
+void Serialization::writeFacultyFile(TreeNode<Faculty> *faculty, BST<Faculty> *facultyDB) {
+    ofstream WriteFile;
+    WriteFile.open("facultyTable.txt", ios_base::app);
 
     if (facultyDB != NULL) {
-        WriteFile << endl;
-        WriteFile << node->key.id << endl;
-        WriteFile << node->key.name << endl;
-        WriteFile << node->key.level << endl;
-        WriteFile << node->key.getDepartment() << endl;
+        WriteFile << endl << "-----------------" << endl;
+        WriteFile << faculty->key.name << endl;
+        WriteFile << faculty->key.id << endl;
+        WriteFile << faculty->key.level << endl;
+        WriteFile << faculty->key.getDepartment() << endl;
+        WriteFile << faculty->key.getAdviseeIDs().size() << endl;
+        
+        for (int i = 0; i < faculty->key.getAdviseeIDs().size(); ++i)
+            WriteFile << faculty->key.getAdviseeIDs().at(i) << endl;
 
-        WriteFile << node->key.getAdviseesIDs().size() << endl;
-        for (int i = 0; i < node->key.getAdviseesIDs().size(); ++i) {
-            WriteFile << node->key.getAdviseesIDs().at(i) << endl;
-        }
 
-        // recursion
-        if (node->left != NULL)
-            writeFacultyFile(node->left, facultyDB);
-        if (node->right != NULL)
-            writeFacultyFile(node->right, facultyDB);
+        if (faculty->left != NULL)
+            writeFacultyFile(faculty->left, facultyDB);
+        if (faculty->right != NULL)
+            writeFacultyFile(faculty->right, facultyDB);
+
     }
+    
+    else
+        cout << "The faculty database is empty" << endl;
 
     WriteFile.close();
 }
 
-/* serialize */
-/***/
+/* serialize (core function) */
+/**
+ * performs the serialization for the program.
+ * @param studentDB the student database.
+ * @param facultyDB the faculty database.
+ */
 void Serialization::serialize(BST<Student> *studentDB, BST<Faculty> *facultyDB) {
-    ifstream ReadStudentFile("studentTable.txt");
-    ifstream ReadFacultyFile("facultyTable.txt");
-    ofstream WriteStudentFile("studentTable.txt");
-    ofstream WriteFacultyFile("facultyTable.txt");
+    ofstream studentFile;
+    studentFile.open("studentTable.txt");
 
-    if (ReadStudentFile.is_open()) {
-        WriteStudentFile << studentDB->getSize() << endl;
-        writeStudentFile(studentDB->getRoot(), studentDB);
+    if (studentFile.is_open()) {
+        studentFile << studentDB->getSize() << endl;
+        TreeNode<Student> *student = studentDB->getRoot();
+        writeStudentFile(student, studentDB);
     }
+    studentFile.close();
 
-    if (ReadFacultyFile.is_open()) {
-        WriteFacultyFile << facultyDB->getSize() << endl;
-        writeFacultyFile(facultyDB->getRoot(), facultyDB);
+    ofstream facultyFile;  
+    facultyFile.open("facultyTable.txt");
+    if (facultyFile.is_open()) {
+        facultyFile << facultyDB->getSize() << endl;
+        TreeNode<Faculty> *faculty = facultyDB->getRoot();
+        writeFacultyFile(faculty, facultyDB);
     }
+    facultyFile.close();
 }
