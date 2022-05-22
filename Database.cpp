@@ -28,7 +28,7 @@ void Database::run() {
     //s->serialize();
     int option = printMenu();
 
-    while (true) {
+    while (option != 14) {
 
         switch(option) {
             case 1:
@@ -75,9 +75,6 @@ void Database::run() {
                 break;
         }
 
-        if (option == 14)
-            break;
-
         option = printMenu();
     }
 }
@@ -89,7 +86,8 @@ void Database::run() {
  */
 int Database::printMenu() {
     // print menu
-    cout << endl << "1. Print all students and their information (sorted by ascending ID number)." << endl;
+    cout << "---------------------------------------------------------------------------" << endl;
+    cout << "1. Print all students and their information (sorted by ascending ID number)." << endl;
     cout << "2. Print all faculty and their information (sorted by ascending ID number)." << endl;
     cout << "3. Find and display student information given the student's id." << endl;
     cout << "4. Find and display faculty information given the faculty id." << endl;
@@ -102,7 +100,8 @@ int Database::printMenu() {
     cout << "11. Change a student's advisor given the student id and the new faculty ID." << endl;
     cout << "12. Remove an advisee from a faculty member given the IDs. " << endl;
     cout << "13. Rollback." << endl;
-    cout << "14. Exit." << endl << endl;
+    cout << "14. Exit." << endl;
+    cout << "---------------------------------------------------------------------------" << endl;
 
     // user input
     cout << "Please enter an option (1-14): ";
@@ -124,9 +123,9 @@ int Database::printMenu() {
  * prints all of the students in the database.
  * if the database contains no students, a message will print out informing the user.
  */
-void Database::printAllStudents() {
+void Database::printAllStudents() { // 1
     if (masterStudent->isEmpty()) // checks if tree is empty
-        cout << "There are no students in your database." << endl;
+        cout << endl << endl << "There are no students in your database." << endl;
     else
         masterStudent->printNodes();
 }
@@ -136,9 +135,9 @@ void Database::printAllStudents() {
  * prints all of the faculty members in the database.
  * if the database contains no faculty members, a message will print out informing the user.
  */
-void Database::printAllFaculty() {
+void Database::printAllFaculty() { // 2
     if (masterFaculty->isEmpty()) // checks if tree is empty
-        cout << "There are no faculty members in your database." << endl;
+        cout << endl << endl << "There are no faculty members in your database." << endl;
     else
         masterFaculty->printNodes();
 }
@@ -148,9 +147,9 @@ void Database::printAllFaculty() {
  * prints out a student's information given the student ID.
  * if the database contains no students, a message will print out informing the user.
  */
-void Database::printStudentInfo() {
+void Database::printStudentInfo() { // 3
     if (masterStudent->isEmpty()) // checks if tree is empty
-        cout << "There are no students in your database." << endl;
+        cout << endl << endl << "There are no students in your database." << endl;
 
     else {
         while (true) {
@@ -175,9 +174,9 @@ void Database::printStudentInfo() {
  * prints out a student's advisor information given the student ID.
  * if the database contains no faculty members, a message will print out informing the user.
  */
-void Database::printFacultyInfo() {
+void Database::printFacultyInfo() { // 4
     if (masterFaculty->isEmpty()) // checks if tree is empty
-        cout << "There are no faculty members in your database." << endl;
+        cout << endl << endl << "There are no faculty members in your database." << endl;
 
     else {
         while (true) {
@@ -202,9 +201,10 @@ void Database::printFacultyInfo() {
  * print out a student's advisor's info given the student ID.
  * if the database contains no students, a message will print out informing the user.
  */
-void Database::printAdvisorInfo() {
+void Database::printAdvisorInfo() { // 5
     if (masterStudent->isEmpty()) // checks if tree is empty
-        cout << "There are no students in your database." << endl;
+        cout << endl << endl << "There are no students in your database." << endl;
+
     else {
         while (true) {
             // get user's input
@@ -229,12 +229,12 @@ void Database::printAdvisorInfo() {
  * prints the advisees of a faculty member given the faculty ID.
  * if the database contains no faculty members, a message will print out informing the user.
  */
-void Database::printAdviseesInfo() {
-    while (true) {
-        if (masterFaculty->isEmpty()) // check if tree is empty
-            cout << "There are no faculty members in your database." << endl;
+void Database::printAdviseesInfo() { // 6
+    if (masterFaculty->isEmpty()) // check if tree is empty
+        cout << endl << endl << "There are no faculty members in your database." << endl;
 
-        else {
+    else {
+        while (true) {
             // get user's input
             cout << "Please enter the faculty ID: ";
             int id;
@@ -253,7 +253,7 @@ void Database::printAdviseesInfo() {
                 cout << "That faculty does not exist in database." << endl;
                 cout << "Please try again." << endl;
         }
-    }    
+    }
 }
 
 /**
@@ -263,7 +263,7 @@ void Database::printAdviseesInfo() {
  * the student ID is randomized and must be unique.
  * if the database contains no faculty members, a message will print out informing the user that they must add a faculty member before adding a student in the database.
  */
-void Database::addNewStudent() {
+void Database::addNewStudent() { // 7
     string name = "";
     int id = -1;
     string level = "";
@@ -272,7 +272,7 @@ void Database::addNewStudent() {
     int advisorID = -1;
 
     if (masterFaculty->isEmpty()) // checks for if there are faculty/advisors
-        cout << "You must add a faculty member (advisor) before adding a new student." << endl;
+        cout << endl << endl << "You must add a faculty member (advisor) before adding a new student." << endl;
     else {
         cout << "Please enter the information about the student." << endl;
         
@@ -310,6 +310,7 @@ void Database::addNewStudent() {
         masterStudent->insert(*s);
 
         rb->studentAction(s, "is"); // rollback
+        delete s;
     }
 }
 
@@ -318,9 +319,9 @@ void Database::addNewStudent() {
  * delete a student from the database given the student ID.
  * if the database contains no students, a message will print out informing the user.
  */
-void Database::deleteStudent() {
+void Database::deleteStudent() { // 8
     if (masterStudent->isEmpty()) // checks if tree is empty
-        cout << "There are no students in your database." << endl;
+        cout << endl << endl << "There are no students in your database." << endl;
 
     else {
         while (true) {
@@ -354,13 +355,13 @@ void Database::deleteStudent() {
  * the name, level, and department are prompted from the user.
  * the faculty ID is randomized and must be unique.
  */
-void Database::addNewFaculty() {
+void Database::addNewFaculty() { // 9
     string name = "";
     int id = -1;
     string level = "";
     string department = "";
 
-    cout << "Please enter the information about the faculty member." << endl;
+    cout << endl << "Please enter the information about the faculty member." << endl;
 
     cout << "Name: ";
     cin >> name;
@@ -372,12 +373,19 @@ void Database::addNewFaculty() {
     cin >> department;
 
     // randomizing faculty ID (unique)
+    id = rand() % 1000;
     while (masterFaculty->idExists(id))
         id = rand() % 1000;
 
     Faculty *f = new Faculty(id, name, level, department);
+    cout << "hi" << endl;
     masterFaculty->insert(*f);
-    rb->facultyAction(f, "if");
+    cout << "just inserted " << endl;
+    //rb->facultyAction(&f, "if");
+    //cout << "rollback" << endl;
+    delete f;
+    
+    masterFaculty->printNodes();
 }
 
 /**
@@ -386,9 +394,9 @@ void Database::addNewFaculty() {
  * the faculty member's advisee's advisor will be set to -1.
  * if the database contains no faculty members, a message will print out informing the user.
  */
-void Database::deleteFaculty() {
+void Database::deleteFaculty() { // 10
     if (masterFaculty->isEmpty()) // checks if tree is empty
-        cout << "There are no faculty members in your database." << endl;
+        cout << endl << endl << "There are no faculty members in your database." << endl;
 
     else {
         while (true) {
@@ -424,7 +432,7 @@ void Database::deleteFaculty() {
  * if the database contains no students, a message will print out informing the user.
  * if the database contains no faculty members, a message will print out informing the user.
  */
-void Database::changeAdvisor() {
+void Database::changeAdvisor() { // 11
     // checks if any tree is empty
     if (masterStudent->isEmpty())
         cout << "There are no students in your database." << endl;
@@ -476,7 +484,7 @@ void Database::changeAdvisor() {
  * if the database contains no faculty members, a message will print out informing the user.
  * if the database contains no students, a message will print out informing the user.
  */
-void Database::removeAdvisee() {
+void Database::removeAdvisee() { // 12
     // checks if any tree is empty
     if (masterFaculty->isEmpty())
         cout << "There are no faculty members in your database." << endl;
@@ -538,7 +546,7 @@ void Database::removeAdvisee() {
  * undos the previous action.
  * if cannot undo, a message will print informing the user.
  */
-void Database::rollBack() {
+void Database::rollBack() { // 13
     if (!rb->undo(masterStudent, masterFaculty))
         cout << "Cannot undo" << endl;
 }
@@ -547,7 +555,7 @@ void Database::rollBack() {
  * exits the program using serialization
  * option 14
  */
-void Database::exit() {
+void Database::exit() { // 14
     s->serialize(masterStudent, masterFaculty);
     cout << "Exiting program" << endl;
 }

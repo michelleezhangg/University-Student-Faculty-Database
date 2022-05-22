@@ -1,254 +1,331 @@
 /*
-* Name: Michelle Zhang
-* Student ID: 2380210
-* Chapman Email: mizhang@chapman.edu
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
 * Course: CPSC 350-01
 * Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* The template file implementing a BST.
+* This will be used to serve as the structure for the database, one for students, one for faculty.
 */
 
 #ifndef BST_H
 #define BST_H
-
 #include <iostream>
+
 using namespace std;
 
-/* header for the TreeNode class. */
+/* header for the TreeNode class */
 template <class T>
-class TreeNode {
+class TreeNode{
     public:
         TreeNode(); // default constructor
         TreeNode(T key); // overloaded constructor
         virtual ~TreeNode(); // destructor
 
         T key; //key = data
-        TreeNode<T> *left; // left child
-        TreeNode<T> *right; // right child
+        TreeNode<T> *left;
+        TreeNode<T> *right;
 };
 
-/* implementation for the TreeNode class. */
+/* implementation for the TreeNode class */
 template <class T>
-TreeNode<T>::TreeNode() {
+TreeNode<T>::TreeNode(){ // default constructor
     left = NULL;
     right = NULL;
     key = NULL;
 }
 
 template <class T>
-TreeNode<T>::TreeNode(T k) {
+TreeNode<T>::TreeNode(T k){ // overloaded constructor
     left = NULL;
     right = NULL;
     key = k;
 }
 
 template <class T>
-TreeNode<T>::~TreeNode() {
+TreeNode<T>::~TreeNode(){ // destructor
     left = NULL;
     right = NULL;
 }
 
 /* header for the BST class. */
 template <class T>
-class BST {
+class BST{
     public:
-        BST(); // default constructor
-        virtual ~BST(); // destructor
+        BST();
+        virtual ~BST();
 
         void insert(T value);
-        bool contains(T value); // search
+        bool contains(T value); //search
         bool deleteNode(T k);
         bool isEmpty();
+        void printNodes(); //prints the whole tree using recPrint
+        int getSize();
+
+        // functions based on ID
+        bool idExists(int id); // returns true if the ID exists in the tree
+        T getNode(int id); //returns the node given the id
+        void printNode(int id); //if id exists
 
         T* getMin();
         T* getMax();
         TreeNode<T> *getSuccessor(TreeNode<T> *d); //d represents the node we are going to delete
-        void printNodes();
-        void recPrint(TreeNode<T> *node);
+        void recPrint(TreeNode<T> *node); // recursively prints the whole tree
         T calcSum(TreeNode<T> *node);
         TreeNode<T>* getRoot();
-        int getSize();
 
-        // functions based on ID
-        bool idExists(int id);
-        void printNode(int id);
-        T getNode(int id);
     private:
         TreeNode<T> *root;
         int size;
 };
 
-/* implementation for the BST class. */
+/* implementation for the BST class */
 template <class T>
-BST<T>::BST() { // default constructor
+BST<T>::BST(){ // default constructor
     root = NULL;
 }
 
 template <class T>
-BST<T>::~BST() { // destructor
-    delete root;
-}
+BST<T>::~BST(){} // destructor
 
-/** @return the root (TreeNode) of the BST */
+/** @return TreeNode root */
 template <class T>
-TreeNode<T>* BST<T>::getRoot() {
+TreeNode<T>* BST<T>::getRoot(){
     return root;
 }
 
 /** 
- * prints out the entire BST (uses recursion).
- * auxiliary function to help with function printNodes().
+ * prints out a tree recursively starting with the param node
+ * @param node a TreeNode to start printing from (root)
  */
 template <class T>
-void BST<T>::recPrint(TreeNode<T> *node) {
+void BST<T>::recPrint(TreeNode<T> *node){
     if(node == NULL)
         return;
 
     cout << node->key << endl;
+    
     recPrint(node->left);
     recPrint(node->right);
 }
 
 /**
- * @return the sum of all of the nodes' keys in the BST. 
- * not needed in this assignment.
+ * calculates the sum of all of the node's keys
+ * @param node  a TreeNode to start calculating from (root)
  */
 template <class T>
-T BST<T>::calcSum(TreeNode<T> *node) {
+T BST<T>::calcSum(TreeNode<T> *node){
     if(node == NULL)
         return 0;
     
     return (node->key + calcSum(node->left) + calcSum(node->right));
 }
 
-/**
- * prints out all of the nodes of the BST from leftmost to rightmost.
- * uses the function recPrint() to help.
- */
+/** prints out all nodes of the database */
 template <class T>
-void BST<T>::printNodes() {
+void BST<T>::printNodes(){
     recPrint(root);
 }
 
-/**
- * tells whether the BST is empty or not.
- * @return true if the BST is empty (root is null).
- * @return false if the BST is not empty (root is not null).
- */
+/** prints the key of a node (student/faculty) given the ID */
 template <class T>
-bool BST<T>::isEmpty() {
+void BST<T>::printNode(int id){
+    TreeNode<T> *current = root;
+
+    if (root == NULL){
+        return;
+    } else {
+
+        while (current->key.id != id){
+
+            if (current == NULL){
+
+                return;
+            } else if (id < current->key.id){
+                current = current->left;
+            } else {
+                current = current->right;
+            }
+        }
+    }
+    cout << current->key;
+}
+
+/** @return the number of nodes in the tree */
+template <class T>
+int BST<T>::getSize(){
+    return size;
+}
+
+/** @return true if the tree is empty and false otherwise */
+template <class T>
+bool BST<T>::isEmpty(){
     return (root == NULL);
 }
 
 /**
- * outputs the minimum key value of the tree.
- * @return the key value of the minimum of the tree or the leftmost node of the tree.
+ * returns whether an ID exists in the database or not
+ * @param id the id to see if it exists in the database
+ * @return true if the id exists in the database and false otherwise
  */
 template <class T>
-T* BST<T>::getMin() {
+bool BST<T>::idExists(int id){
+    TreeNode<T> *current = root;
+
+    if (isEmpty())
+        return false;
+    
+    else {
+        while (current->key.id != id){
+            if (current == NULL)
+                return false;    
+
+            else if (id < current->key.id)
+                current = current->left;
+            else
+                current = current->right;  
+        }          
+    }
+
+    return true;
+}
+
+/**
+ * returns the key of a node from the tree given the ID
+ * @param id the ID we want the key from
+ */
+template <class T>
+T BST<T>::getNode(int id){
+    TreeNode<T> *current = root;
+
+    if (root == NULL)
+        return T();
+
+    else {
+        while (current->key.id != id){
+            if (current == NULL)
+                return T();
+                
+            else if (id < current->key.id)
+                current = current->left;
+            else
+                current = current->right;
+        }
+    }
+
+    return current->key;
+}
+
+/**
+ * returns the minimum key in the BST
+ * @return the minimum key in the BST
+ */
+template <class T>
+T* BST<T>::getMin(){
     if(isEmpty())
         return NULL;
 
     TreeNode<T> *current = root;
-    while(current->left != NULL) {
+    while(current->left != NULL){
         current = current->left;
     }
     return &(current->key);
 }
 
 /**
- * outputs the maximum key value of the tree.
- * @return the key value of the maximum of the tree or the rightmost node of the tree.
+ * returns the maximum key in the BST
+ * @return the maximum key in the BST
  */
 template <class T>
-T* BST<T>::getMax() {
+T* BST<T>::getMax(){
     if(isEmpty())
         return NULL;
 
     TreeNode<T> *current = root;
-    while(current->right != NULL) {
+    while(current->right != NULL){
         current = current->right;
     }
     return &(current->key);
 }
 
 /**
- * inserts a node of key value into the BST while maintaining the BST rules.
- * @param value The value that wants to be inserted into the BST.
+ * inserts a node of key value into BST, maintains BST rules
+ * @param value value of node wanting to be inserted
  */
 template <class T>
-void BST<T>::insert(T value) {
+void BST<T>::insert(T value){
     TreeNode<T> *node = new TreeNode<T>(value);
     
     if(isEmpty())
         root = node;
-    else {
-        //the tree is not empty
+
+    else { // the tree not empty
         TreeNode<T> *current = root;
         TreeNode<T> *parent = NULL;
 
-        while(true) {
+        while(true){
             parent = current;
             
-            if(value < current->key){
-                //we go left
+            if(value < current->key){ 
+                // check left
                 current = current->left;
                 if(current == NULL){
-                    //we found the insertion point
+                    // insert
                     parent->left = node;
                     break;
                 }
             }
-            else {
-                //we go right
+            
+            else{
+                // check right
                 current = current->right;
-                if(current == NULL) {
-                    //we found the insertion point
+                if(current == NULL){
+                    // insert
                     parent->right = node;
                     break;
                 }
             }
         }
     }
-    ++size; // increment size
+    size++;
 }
 
 /**
- * checks if the BST contains the parameter (value).
- * @param value the value that we want to check if the BST contains.
- * @return true if the value exists in the BST.
- * @return false if the value does not exist in the BST.
+ * checks if a value exists in the BST
+ * @param value the value to check
+ * @return true if the value exists in the BST and false otherwise
  */
 template <class T>
-bool BST<T>::contains(T value) {
+bool BST<T>::contains(T value){
     if(isEmpty())
         return false;
 
     TreeNode<T> *current = root;
 
-    while(current->key != value) {
+    while(current->key != value){
         if(value < current->key)
             current = current->left;
         else
             current = current->right;
 
-        if(current == NULL)
+        if (current == NULL)
             return false;
     }
     return true;
 }
 
 /**
- * deletes a node of value k from the BST.
- * @param k the key value that we wish to delete from the BST.
- * @return true if the node is successfully deleted from the BST.
- * @return false if the node cannot be deleted from the BST.
- */
+ * deletes a node of value k from the BST
+ * @param k the key to delete
+ * @return true if successfully delete and false otherwise
+*/
 template <class T>
-bool BST<T>::deleteNode(T k) {
+bool BST<T>::deleteNode(T k){
     if (isEmpty())
         return false; // empty tree
 
-    --size; // decrement size
-    
+    --size;
     // search for node
     TreeNode<T> *parent = NULL;
     TreeNode<T> *current = root;
@@ -310,104 +387,28 @@ bool BST<T>::deleteNode(T k) {
             parent->left = successor;
         else
             parent->right = successor;
-    }
 
+    }
     return true;
 }
 
-/* d represents the node to be delete */
+/** 
+ * finds the successor of the parameter node
+ * @return the successor of the parameter node
+ */
 template <class T>
-TreeNode<T>* BST<T>::getSuccessor(TreeNode<T> *d) {
+TreeNode<T>* BST<T>::getSuccessor(TreeNode<T> *d){
     TreeNode<T> *sp = d;
     TreeNode<T> *successor = d;
     TreeNode<T> *current = d->right;
 
-    while (current != NULL) {
+    while (current != NULL){
         sp = successor;
         successor = current;
         current = current->left;
     }
 
-    return current; // FIXME: check this
-}
-
-/**
- * tells whether or not an ID exists in the database.
- * @param id an integer representing the ID that we wish to know whether it exists in the database or not.
- * @return true if the ID is found in the database (exists).
- * @return false if the ID is not found in the database (does not exist).
- */
-template <class T>
-bool BST<T>::idExists(int id) {
-    TreeNode<T> *current = root;
-
-    if (root == NULL)
-        return false;
-    
-    else {
-        while (current->key.id != id) {
-            if (current == NULL)
-                return false;
-            else if (id < current->key.id)
-                current = current->left;
-            else    
-                current = current->right;
-        }
-    }
-    return true;
-}
-
-/**
- * prints out the node of the tree given the ID.
- * @param id an integer representing the ID that we wish to know
- */
-template <class T>
-T BST<T>::getNode(int id) {
-    TreeNode<T> *current = root;
-
-    if (root == NULL)
-        return T();
-    
-    else {
-        while (current->key.id != id) {
-            if (current == NULL)
-                return T();
-            else if (id < current->key.id)
-                current = current->left;
-            else    
-                current = current->right;
-        }
-    }
-    return current->key;
-}
-
-/**
- * prints out the node of the tree given the ID.
- * @param id an integer representing the ID that we wish to know
- */
-template <class T>
-void BST<T>::printNode(int id) {
-    TreeNode<T> *current = root;
-
-    if (root == NULL)
-        return T();
-    
-    else {
-        while (current->key.id != id) {
-            if (current == NULL)
-                return;
-            else if (id < current->key.id)
-                current = current->left;
-            else    
-                current = current->right;
-        }
-    }
-    cout << current->key;
-}
-
-template <class T>
-int BST<T>::getSize() {
-    return size;
+    return current;
 }
 
 #endif
