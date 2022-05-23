@@ -1,3 +1,14 @@
+/*
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* This is the header file for the Faculty Class.
+* This class inherits from Person Class.
+*/
+
 #ifndef FACULTY_H
 #define FACULTY_H
 
@@ -10,11 +21,11 @@ class Faculty : public Person {
 
     public:
 
-        Faculty();
-        Faculty(string name, int id, string level, string department);
+        Faculty(); // default constructor
+        Faculty(string name, int id, string level, string department); // overloaded constructor
         ~Faculty();
 
-        //getters
+        // accessors
         string getName();
         int getID();
         string getLevel();
@@ -22,7 +33,7 @@ class Faculty : public Person {
         vector<int> getAdviseeIDs();
         int getNumAdvisees();
 
-        //setters
+        // mutators
         void setName(string fName);
         void setID(int fID);
         void setLevel(string fLevel);
@@ -30,6 +41,7 @@ class Faculty : public Person {
         void setAdviseeID(vector<int> *aIDs);
         void setNumAdvisees(int na);
 
+        // functions
         void addAdvisee(int id);
         void removeAdvisee(int id);
 
@@ -37,10 +49,10 @@ class Faculty : public Person {
         string getFacultyInfo();
         friend ostream& operator << (ostream &os, const Faculty &f);
 
+        // attributes
         string department;
         int numAdvisees;
         vector<int> *adviseeIDs;
-
         FacultyRecords *facultyRecord;
 
 
