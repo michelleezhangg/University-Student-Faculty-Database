@@ -1,41 +1,55 @@
+/*
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* The template file implementing a BST.
+* This will be used to serve as the structure for the database, one for students, one for faculty.
+*/
+
 #ifndef BST_H
 #define BST_H
 #include <iostream>
 
 using namespace std;
 
+/* header for the TreeNode class */
 template <class T>
 class TreeNode{
     public:
-        TreeNode();
-        TreeNode(T key);
-        virtual ~TreeNode();
+        TreeNode(); // default constructor
+        TreeNode(T key); // overloaded constructor
+        virtual ~TreeNode(); // destructor
 
-        T key; //key = data
+        T key; // key = data
         TreeNode<T> *left;
         TreeNode<T> *right;
 };
 
+/* implementation for the TreeNode class */
 template <class T>
-TreeNode<T>::TreeNode(){
+TreeNode<T>::TreeNode(){ // default constructor
     left = NULL;
     right = NULL;
     key = NULL;
 }
 
 template <class T>
-TreeNode<T>::TreeNode(T k){
+TreeNode<T>::TreeNode(T k){ // overloaded constructor
     left = NULL;
     right = NULL;
     key = k;
 }
 
 template <class T>
-TreeNode<T>::~TreeNode(){
+TreeNode<T>::~TreeNode(){ // destructor
     left = NULL;
     right = NULL;
 }
 
+/* header for the BST class */
 template <class T>
 class BST{
     public:
@@ -43,48 +57,52 @@ class BST{
         virtual ~BST();
 
         void insert(T value);
-        bool contains(T value);//search
+        bool contains(T value); // search
         bool deleteNode(T k);
         bool isEmpty();
+        void printNodes(); //prints the whole tree
 
+        // functions based on ID
         bool idExists(int id); // returns true if the ID exists in the tree
         T getNode(int id); //returns the node given the id
         void printNode(int id); //if id exists
-
-        void printNodes(); //prints the whole tree
+    
         int getSize();
 
         T* getMin();
         T* getMax();
 
         TreeNode<T> *getSuccessor(TreeNode<T> *d); //d represents the node we are going to delete
-        
-        void recPrint(TreeNode<T> *node); //called to print nodes (recursively)
+        void recPrint(TreeNode<T> *node); // recursively prints the whole tree
         
         T calcSum(TreeNode<T> *node);
         TreeNode<T>* getRoot();
-        int size;
 
     private:
         TreeNode<T> *root;
+        int size;
 };
 
+/* implementation for the BST class */
 template <class T>
-BST<T>::BST(){
+BST<T>::BST(){ // default constructor
     root = NULL;
 }
 
-template <class T>
-BST<T>::~BST(){
-    //build some character
-    //and do a little research
-}
 
+template <class T>
+BST<T>::~BST(){} // destructor
+
+/** @return TreeNode root */
 template <class T>
 TreeNode<T>* BST<T>::getRoot(){
     return root;
 }
 
+/** 
+ * prints out a tree recursively starting with the param node
+ * @param node a TreeNode to start printing from (root)
+ */
 template <class T>
 void BST<T>::recPrint(TreeNode<T> *node){
     
@@ -97,6 +115,10 @@ void BST<T>::recPrint(TreeNode<T> *node){
     recPrint(node->right);
 }
 
+/**
+ * calculates the sum of all of the node's keys
+ * @param node  a TreeNode to start calculating from (root)
+ */
 template <class T>
 T BST<T>::calcSum(TreeNode<T> *node){
     if(node == NULL)
@@ -105,14 +127,15 @@ T BST<T>::calcSum(TreeNode<T> *node){
     return (node->key + calcSum(node->left) + calcSum(node->right));
 }
 
+/** prints out all nodes of the database */
 template <class T>
 void BST<T>::printNodes(){
 
     recPrint(root);
 }
 
+/** prints the key of a node (student/faculty) given the ID */
 template <class T>
-/*this function prints the entire tree*/
 void BST<T>::printNode(int id){
     TreeNode<T> *current = root;
 
@@ -135,11 +158,10 @@ void BST<T>::printNode(int id){
     cout << current->key;
 }
 
+/** @return the number of nodes in the tree */
 template <class T>
 int BST<T>::getSize(){
-
     return size;
-
 }
 
 template <class T>
@@ -147,6 +169,11 @@ bool BST<T>::isEmpty(){
     return (root == NULL);
 }
 
+/**
+ * returns whether an ID exists in the database or not
+ * @param id the id to see if it exists in the database
+ * @return true if the id exists in the database and false otherwise
+ */
 template <class T>
 bool BST<T>::idExists(int id){
 
@@ -175,6 +202,10 @@ bool BST<T>::idExists(int id){
     return true;
 }
 
+/**
+ * returns the key of a node from the tree given the ID
+ * @param id the ID we want the key from
+ */
 template <class T>
 T BST<T>::getNode(int id){
     TreeNode<T> *current = root;
@@ -203,6 +234,10 @@ T BST<T>::getNode(int id){
 
 }
 
+/**
+ * returns the minimum key in the BST
+ * @return the minimum key in the BST
+ */
 template <class T>
 T* BST<T>::getMin(){
     if(isEmpty())
@@ -215,6 +250,10 @@ T* BST<T>::getMin(){
     return &(current->key);
 }
 
+/**
+ * returns the maximum key in the BST
+ * @return the maximum key in the BST
+ */
 template <class T>
 T* BST<T>::getMax(){
     if(isEmpty())
@@ -227,6 +266,10 @@ T* BST<T>::getMax(){
     return &(current->key);
 }
 
+/**
+ * inserts a node of key value into BST, maintains BST rules
+ * @param value value of node wanting to be inserted
+ */
 template <class T>
 void BST<T>::insert(T value){
 
@@ -245,21 +288,21 @@ void BST<T>::insert(T value){
             parent = current;
             
             if(value < current->key){
-                //we go left
+                // check left
                 current = current->left;
                 if(current == NULL){
 
-                    //we found the insertion point
+                    // insert
                     parent->left = node;
                     break;
                 }
             } else{
 
-                //we go right
+                // check right
                 current = current->right;
                 if(current == NULL){
 
-                    //we found the insertion point
+                    // insert
                     parent->right = node;
                     break;
                 }
@@ -271,6 +314,11 @@ void BST<T>::insert(T value){
     
 }
 
+/**
+ * checks if a value exists in the BST
+ * @param value the value to check
+ * @return true if the value exists in the BST and false otherwise
+ */
 template <class T>
 bool BST<T>::contains(T value){
     if(isEmpty())
@@ -290,6 +338,11 @@ bool BST<T>::contains(T value){
     return true;
 }
 
+/**
+ * deletes a node of value k from the BST
+ * @param k the key to delete
+ * @return true if successfully delete and false otherwise
+*/
 template <class T>
 bool BST<T>::deleteNode(T k){
     
@@ -364,8 +417,13 @@ bool BST<T>::deleteNode(T k){
     return true;
 }
 
+/** 
+ * finds the successor of the parameter node
+ * used in the deleteNode function
+ * @param d the TreeNode to delete
+ * @return the successor of the parameter node
+ */
 template <class T>
-/* d represents the node to be delete */
 TreeNode<T>* BST<T>::getSuccessor(TreeNode<T> *d){
 
     TreeNode<T> *sp = d;
