@@ -1,9 +1,25 @@
+/*
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* This is the implementation file for the Serialization Class.
+*/
+
 #include "Serialization.h"
 
-Serialization::Serialization(){}
+Serialization::Serialization(){} // default constructor
 
-Serialization::~Serialization(){}
+Serialization::~Serialization(){} // destructor
 
+/**
+ * writes the student BST database to a file, studentTable.txt.
+ * @param student the first student used to traverse through the student BST.
+ * @param studentDB the database to traverse through to write to studentTable.txt file.
+ * recursive
+ */
 void Serialization::writeToStudentFile(TreeNode<Student> *student, BST<Student> *studentDB){
 
     ofstream WriteFile;
@@ -49,6 +65,12 @@ void Serialization::writeToStudentFile(TreeNode<Student> *student, BST<Student> 
     WriteFile.close();
 }
 
+/**
+ * * writes the faculty BST database to a file, facultyTable.txt.
+ * @param faculty the first faculty used to traverse through the faculty BST.
+ * @param facultyDB the database to traverse through to write to facultyTable.txt file.
+ * recursive
+ */
 void Serialization::writeToFacultyFile(TreeNode<Faculty> *faculty, BST<Faculty> *facultyDB){
 
     ofstream WriteFile;
@@ -97,6 +119,10 @@ void Serialization::writeToFacultyFile(TreeNode<Faculty> *faculty, BST<Faculty> 
 
 }
 
+/**
+ * reads the file studentTable.txt and populates the database with the contents of that file if it exists.
+ * @param masterStudent the database to populate if studentTable.txt exists.
+ */
 void Serialization::readToStudentDB(BST<Student> *masterStudent){
 
     ifstream studentFile;
@@ -174,6 +200,10 @@ void Serialization::readToStudentDB(BST<Student> *masterStudent){
 
 }
 
+/**
+ * read the file facultyTable.txt and populates the database with the contents of that file if it exists.
+ * @param masterFaculty the database to populate if the file facultyTable.txt exists.
+ */
 void Serialization::readToFacultyDB(BST<Faculty> *masterFaculty){
 
     ifstream facultyFile;
@@ -255,6 +285,11 @@ void Serialization::readToFacultyDB(BST<Faculty> *masterFaculty){
 
 }
 
+/**
+ * performs the serialization for the program.
+ * @param studentDB the student database.
+ * @param facultyDB the faculty database.
+ */
 void Serialization::serialize(BST<Student> *studentDB, BST<Faculty> *facultyDB){
 
     ofstream studentFile;
