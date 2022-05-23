@@ -1,6 +1,16 @@
+/*
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* This is the implementation file for the Database Class.
+*/
+
 #include "DB.h"
 
-DB::DB(){
+DB::DB(){ // default constructor
 
     masterStudent = new BST<Student>();
     masterFaculty = new BST<Faculty>();
@@ -10,13 +20,15 @@ DB::DB(){
     s = new Serialization();
 }
 
-DB::~DB(){
+DB::~DB(){ // destructor
 
     delete masterStudent;
     delete masterFaculty;
     delete rb;
+    delete s;
 }
 
+/** reads the student and faculty files (studentTable.txt and facultyTable.txt) before the program. */
 void DB::readFiles(){
 
     s->readToStudentDB(masterStudent);
@@ -24,6 +36,10 @@ void DB::readFiles(){
 
 }
 
+/**
+ * the core function of the whole program.
+ * prints the menu, takes the user's option and performs that option until the user wants to exit.
+ */
 void DB::simulate(){
 
     int option = printOptions();
@@ -81,6 +97,11 @@ void DB::simulate(){
     }
 }
 
+/**
+ * option 1
+ * prints all of the students in the database.
+ * if the database contains no students, a message will print out informing the user.
+ */
 void DB::printAllStudentInfo(){ //option 1
 
     if (masterStudent->isEmpty()){
@@ -95,6 +116,11 @@ void DB::printAllStudentInfo(){ //option 1
 
 }
 
+/**
+ * option 2
+ * prints all of the faculty members in the database.
+ * if the database contains no faculty members, a message will print out informing the user.
+ */
 void DB::printAllFacultyInfo(){ //option 2
 
     if (masterFaculty->isEmpty()){
@@ -108,6 +134,11 @@ void DB::printAllFacultyInfo(){ //option 2
 
 }
 
+/**
+ * option 3
+ * prints out a student's information given the student ID.
+ * if the database contains no students, a message will print out informing the user.
+ */
 void DB::printSpecificStudent(){ //option 3
 
     while (true){
@@ -136,6 +167,11 @@ void DB::printSpecificStudent(){ //option 3
 
 }
 
+/**
+ * option 4
+ * prints out a student's advisor information given the student ID.
+ * if the database contains no faculty members, a message will print out informing the user.
+ */
 void DB::printSpecificFaculty(){ //option 4
 
     while (true){
@@ -166,6 +202,11 @@ void DB::printSpecificFaculty(){ //option 4
 
 }
 
+/**
+ * option 5
+ * print out a student's advisor's info given the student ID.
+ * if the database contains no students, a message will print out informing the user.
+ */
 void DB::printFacultyAdvisor(){ //option 5
 
     int sID;
@@ -204,6 +245,11 @@ void DB::printFacultyAdvisor(){ //option 5
 
 }
 
+/**
+ * option 6
+ * prints the advisees of a faculty member given the faculty ID.
+ * if the database contains no faculty members, a message will print out informing the user.
+ */
 void DB::printFacultyAdvisees(){ //option 6
     
     int fID;
@@ -244,6 +290,13 @@ void DB::printFacultyAdvisees(){ //option 6
 
 }
 
+/**
+ * option 7
+ * adds a new student to the database.
+ * the name, level, major, and gpa are prompted from the user.
+ * the student ID is randomized and must be unique.
+ * if the database contains no faculty members, a message will print out informing the user that they must add a faculty member before adding a student in the database.
+ */
 void DB::addNewStudent(){ //option 7
 
     int id;
@@ -332,12 +385,18 @@ void DB::addNewStudent(){ //option 7
         masterStudent->printNodes();
 
         rb->studentAction("ADD STUDENT", student);
+        delete s;
     }
 
 
 
 }
 
+/**
+ * option 8
+ * delete a student from the database given the student ID.
+ * if the database contains no students, a message will print out informing the user.
+ */
 void DB::deleteStudent(){ //option 8
 
     while (true){
@@ -381,6 +440,12 @@ void DB::deleteStudent(){ //option 8
 
 }
 
+/**
+ * option 9
+ * adds a new faculty member to the database.
+ * the name, level, and department are prompted from the user.
+ * the faculty ID is randomized and must be unique.
+ */
 void DB::addNewFaculty(){ //option 9
 
     int id;
@@ -429,9 +494,16 @@ void DB::addNewFaculty(){ //option 9
     masterFaculty->printNodes();
 
     rb->facultyAction("ADD FACULTY", faculty);
+    delete f;
 
 }
 
+/**
+ * option 10
+ * delete a faculty member from the database given the student ID.
+ * the faculty member's advisee's advisor will be set to -1.
+ * if the database contains no faculty members, a message will print out informing the user.
+ */
 void DB::deleteFaculty(){ //option 10
 
     while (true){
@@ -477,6 +549,12 @@ void DB::deleteFaculty(){ //option 10
     }
 }
 
+/**
+ * option 11
+ * changes a student's advisor given the student ID and the new faculty member's ID.
+ * if the database contains no students, a message will print out informing the user.
+ * if the database contains no faculty members, a message will print out informing the user.
+ */
 void DB::changeStudentAdvisor(){ //option 11
 
     int studentID;
@@ -551,6 +629,13 @@ void DB::changeStudentAdvisor(){ //option 11
 
 }
 
+/**
+ * option 12
+ * removes a faculty member's advisee given the faculty member's ID and the advisee's ID.
+ * prompts for the advisee's new advisor's ID and assigns that to the removed advisee's advisor.
+ * if the database contains no faculty members, a message will print out informing the user.
+ * if the database contains no students, a message will print out informing the user.
+ */
 void DB::removeAdvisee(){ //option 12
 
 
@@ -615,6 +700,11 @@ void DB::removeAdvisee(){ //option 12
 
 }
 
+/**
+ * option 13
+ * undos the previous action.
+ * if cannot undo, a message will print informing the user.
+ */
 void DB::Undo(){ //option 13
 
     if(!rb->undo(masterStudent, masterFaculty)){
@@ -623,6 +713,10 @@ void DB::Undo(){ //option 13
     }
 }
 
+/**
+ * option 14
+ * exits the program using serialization
+ */
 void DB::Exit(){ //option 14
 
     
@@ -632,6 +726,11 @@ void DB::Exit(){ //option 14
 
 }
 
+/**
+ * prints out the menu for the user and obtains the user's option input.
+ * @return input an integer representing the user's number choice from the menu.
+ * auxiliary function for the function run()
+ */
 int DB::printOptions(){
 
     int userInput;
