@@ -1,3 +1,14 @@
+/*
+* Names: Michelle Zhang, Sanil Doshi
+* Student IDs: 2380210, 2344493
+* Chapman Emails: mizhang@chapman.edu, sdoshi@chapman.edu
+* Course: CPSC 350-01
+* Assignment: Assignment 6 - Building a Database with Binary Search Trees
+
+* This is the header file for the Student class.
+* This class inherits from Person Class.
+*/
+
 #ifndef STUDENT_H
 #define STUDENT_H
 
@@ -8,13 +19,11 @@ class Student : public Person {
 
     public:
 
-        Student();
-        Student(string name, int id, string level, string major, double gpa, int advisorID);
-        ~Student();
+        Student(); // default constructor
+        Student(string name, int id, string level, string major, double gpa, int advisorID); // overloaded constructor
+        ~Student(); // destructor
 
-        StudentRecords *studentRecord;
-
-        //getters
+        // accessors
         string getName();
         int getID();
         string getLevel();
@@ -22,7 +31,7 @@ class Student : public Person {
         int getGPA();
         int getAdvisorID();
 
-        //setters
+        // mutators
         void setName(string sName);
         void setID(int sID);
         void setLevel(string sLevel);
@@ -30,12 +39,15 @@ class Student : public Person {
         void setGPA(double sGPA);
         void setAdvisorID(int sAdvisorID);
 
+        // other functions
         string getStudentInfo();
         friend ostream& operator << (ostream &os, const Student &s);
 
+        // attributes
         string major;
         double gpa;
         int advisorID;
+        StudentRecords *studentRecord;
 
 };
 
