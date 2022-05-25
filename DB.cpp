@@ -494,7 +494,7 @@ void DB::addNewFaculty(){ //option 9
     masterFaculty->printNodes();
 
     rb->facultyAction("ADD FACULTY", faculty);
-    delete f;
+    delete faculty;
 
 }
 
