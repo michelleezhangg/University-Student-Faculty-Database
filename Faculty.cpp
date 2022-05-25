@@ -37,7 +37,7 @@ Faculty::Faculty(string fName, int fID, string fLevel, string fDepartment){ // o
 }
 
 Faculty::~Faculty(){ // destructor
-    delete facultyRecords;
+    delete facultyRecord;
     delete adviseeIDs;
 }
 
